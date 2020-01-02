@@ -13,7 +13,25 @@ During the race, players will be able to see everyone’s progress on a progress
   We will incorporate networking, signals, files, processes, and pipes. Networks will be used to communicate statistics and real-time positions between players on different computers. Signals will be used to stop and exit the game. Text files will store a selection of paragraphs to be randomly chosen for players to type. Multiple child processes will be used to calculate statistics as the race is going on. Pipes will be used to transfer information about real time progress from child processes to parent as the race is going on.
 
 ### Work Break-Down
-
+- Connect players through networking (Steve)
+  - Make a "room" to race in
+  - Start race
+  - Transfer data from computers in real time
+- Take real-time input as the race is going on (single computer level and then expand into networking (Rachel and Steve)
+  - Create database of paragraphs to type (Steve)
+    - Randomly select a paragraph
+    - Function to find the number of characters in the paragraph for statistics
+  - Test user input against source text and store that information to determine... (Rachel)
+    - Real-time progress (% completion)
+    - Position relative to other players
+    - Words per minute
+- User Interface (Vivian)
+  - Display paragrah typed and an indicator of where the player has typed up to
+  - Display statistics
+  - Names of players/how to display them
+  - Functions for starting and exiting a race (using signals)
+  - User input (typing)
+  
 ### Data Structures
 We will use arrays of strings to provide the paragraphs typed during the game, which each string being a separate character to allow for easy iteration of user inputs for the game.
 
