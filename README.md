@@ -10,7 +10,7 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
 During the race, players will be able to see everyone’s progress on a progress bar. The race will end when the last person finishes typing. There will be a words per minute statistic and an accuracy percentage are calculated and displayed for everybody at the end of each race and those that finish before others have will need to wait for everyone to finish before seeing all statistics. When players finish racing, they are given the options to race again or quit.
 
 ### Topics
-  We will incorporate networking, signals, files, processes, and pipes. Networks will be used to communicate statistics and real-time positions between players on different computers. Signals will be used to stop and exit the game. Text files will store a selection of paragraphs to be randomly chosen for players to type. Multiple child processes will be used to calculate statistics as the race is going on. Pipes will be used to transfer information about real time progress from child processes to parent as the race is going on.
+  We will incorporate networking, signals, processes, files, and pipes. Networks will be used to communicate statistics and real-time positions between players on different computers. A forking server will be used to allow signal communication between processes. Signals will be used on the subservers to stop and exit the game. Text files will store a selection of paragraphs to be randomly chosen for players to type. Pipes will be used to transfer information about real time progress from child processes to parent as the race is going on.
 
 ### Work Break-Down
 - Take real-time input as the race is going on (single computer level and then expand into networking (Rachel and Steve)
