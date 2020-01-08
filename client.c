@@ -21,7 +21,7 @@
   else: nothing happens
   returns the "updated" pointer (position in paragraph)
 */
-char * char_check(char * paragraph, char c){
+char * char_check(char * paragraph, char * c){
   if (!strcmp(c, paragraph)){
     paragraph++;
   }
