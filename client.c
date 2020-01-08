@@ -28,10 +28,13 @@ char * char_check(char * paragraph, char * c){
   return paragraph;
 }
 int main(){
-  int fd;
+  int * fd;
   char buffer[1024];
   char c[1];
   fd = open("paragraph.txt", O_RDONLY);
+  if (fd < 0){
+    printf("Error: %s\n", strerror(errno));
+  }
   fgets(buffer, 1024, fd);
   printf("paragraph: %s\n", buffer);
   while(buffer){
