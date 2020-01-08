@@ -33,7 +33,7 @@ int main(){
   char buffer[1024];
   char c[1];
   f = fopen("paragraph.txt", "r");
-  if (fp == NULL){
+  if (f == NULL){
     printf("Error: %s\n", strerror(errno));
     return 1;
   }
