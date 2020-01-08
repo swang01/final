@@ -29,8 +29,8 @@ char * char_check(char * paragraph, char * c){
 }
 int main(){
   int fd;
-  char[1024] buffer;
-  char[1] c;
+  char buffer[1024];
+  char c[1];
   fd = open("paragraph.txt", O_RDONLY);
   fgets(buffer, 1024, fd);
   printf("paragraph: %s\n", buffer);
