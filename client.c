@@ -28,14 +28,14 @@ char * char_check(char * paragraph, char * c){
   return paragraph;
 }
 int main(){
-  int * fd;
+  int fd;
   char buffer[1024];
   char c[1];
   fd = open("paragraph.txt", O_RDONLY);
   if (fd < 0){
     printf("Error: %s\n", strerror(errno));
   }
-  fgets(buffer, 1024, fd);
+  fgets(buffer, 1024, "paragraph.txt");
   printf("paragraph: %s\n", buffer);
   while(buffer){
     printf("\033[2J");
@@ -43,4 +43,6 @@ int main(){
     fgets(c, 1, stdin);
     char_check(buffer, c);
   }
+  printf("Race over!\n");
+  close(fd);
 }
