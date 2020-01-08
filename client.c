@@ -29,13 +29,20 @@ char * char_check(char * paragraph, char * c){
 }
 int main(){
   int fd;
+  FILE *f;
   char buffer[1024];
   char c[1];
+  f = fopen("paragraph.txt", "r");
+  if (fp == NULL){
+    printf("Error: %s\n", strerror(errno));
+    return 1;
+  }
   fd = open("paragraph.txt", O_RDONLY);
   if (fd < 0){
     printf("Error: %s\n", strerror(errno));
+    return 1;
   }
-  fgets(buffer, 1024, "paragraph.txt");
+  fgets(buffer, 1024, f);
   printf("paragraph: %s\n", buffer);
   while(buffer){
     printf("\033[2J");
