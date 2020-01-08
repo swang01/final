@@ -37,20 +37,26 @@ int main(){
     printf("Error: %s\n", strerror(errno));
     return 1;
   }
-  fd = open("paragraph.txt", O_RDONLY);
-  if (fd < 0){
-    printf("Error: %s\n", strerror(errno));
-    return 1;
-  }
+  // fd = open("paragraph.txt", O_RDONLY);
+  // if (fd < 0){
+  //   printf("Error: %s\n", strerror(errno));
+  //   return 1;
+  // }
   fgets(buffer, 1024, f);
   buffer[strlen(buffer) - 1] = '\0';
-  printf("\033[2J");
+  // printf("\033[2J");
   printf("paragraph: %s\n", buffer);
   printf("Enter some letter: \n");
+  fgets(c, 1, stdin);
+  c[strlen(c) - 1] = '\0';
+  printf("You typed: %s\n", c);
   while(1){
     fgets(c, 1, stdin);
     c[strlen(c) - 1] = '\0';
-    printf("You typed: %s\n", c);
+    // if (c){
+    //   printf("You typed: %s\n", c);
+    //
+    // }
   }
   // while(buffer){
   //   printf("%s\n", buffer);
@@ -60,5 +66,5 @@ int main(){
   //   strcpy(buffer, char_check(buffer, c));
   // }
   printf("Race over!\n");
-  close(fd);
+  // close(fd);
 }
