@@ -8,10 +8,10 @@
 #include <time.h>
 #include <dirent.h>
 #include <signal.h>
-#include <sys/wait.h>
-#include <sys/ipc.h>
-#include <sys/shm.h>
-#include <sys/types.h>
+// #include <sys/wait.h>
+// #include <sys/ipc.h>
+// #include <sys/shm.h>
+// #include <sys/types.h>
 
 /*
   char_check(char * paragraph, char c)
@@ -43,13 +43,22 @@ int main(){
     return 1;
   }
   fgets(buffer, 1024, f);
+  buffer[strlen(buffer) - 1] = '\0';
+  printf("\033[2J");
   printf("paragraph: %s\n", buffer);
-  while(buffer){
-    printf("\033[2J");
-    printf("%s\n", buffer);
+  printf("Enter some letter: \n");
+  while(1){
     fgets(c, 1, stdin);
-    char_check(buffer, c);
+    c[strlen(c) - 1] = '\0';
+    printf("You typed: %s\n", c);
   }
+  // while(buffer){
+  //   printf("%s\n", buffer);
+  //   scanf("%s", a_word);
+  //   fgets(c, 1, stdin);
+  //   printf("\033[2J");
+  //   strcpy(buffer, char_check(buffer, c));
+  // }
   printf("Race over!\n");
   close(fd);
 }
