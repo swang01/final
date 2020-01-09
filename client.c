@@ -23,9 +23,10 @@
   returns 1 if paragraph was changed
 */
 int char_check(char * paragraph, char * c){
-  printf("paragraph[0]: %c\n | c: %c", paragraph[0], c[0]);
-  if (c[0] = paragraph[0]){
+  printf("paragraph[0]: %c | c[0]: %c\n", paragraph[0], c[0]);
+  if (c[0] = paragraph[0]){ //correctly typed
     paragraph++;
+    printf("updated paragraph: %s\n", paragraph);
     return 1;
   }
   return 0;
@@ -44,15 +45,12 @@ int main(){
   paragraph[strlen(paragraph) - 1] = '\0';
   // printf("\033[2J");
   printf("paragraph: %s\n", paragraph);
-  fgets(c, 2, stdin);
   while(paragraph){
-    printf("Enter some letter: \n");
     fgets(c, 2, stdin);
     c[strlen(c) - 1] = '\0';
-    if(char_check(paragraph, c)){ //correctly typed
+    char_check(paragraph, c);
       // printf("\033[2J");
-      printf("Updated: %s\n", paragraph);
-    }
+      // printf("Updated: %s\n", paragraph);
     printf("You typed: %s\n", c);
   }
   printf("Race over!\n");
