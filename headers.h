@@ -11,4 +11,4 @@
 
 #define PAR_LEN 10
 
-char * char_check(char * paragraph, char c);
+char * char_check(char * paragraph, char * typed, char c);
