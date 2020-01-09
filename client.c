@@ -54,7 +54,7 @@ int main(){
     if (c != '\r' && c != EOF && c != '\t'){
       strcpy(paragraph, char_check(paragraph, c));
       printf("\033[2J");
-      printf("%s\n", paragraph);
+      printf("'%s'\n", paragraph);
     }
     // fgets(c, 10, stdin);
     // c[strlen(c) - 1] = '\0';
