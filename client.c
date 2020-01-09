@@ -52,7 +52,7 @@ int main(){
     c = getchar();
     getchar(); //"absorbs" '\n' from pressing ENTER
     if (c != '\r' && c != EOF && c != '\t'){
-      strcpy(paragraph, char_check(paragraph, *c));
+      strcpy(paragraph, char_check(paragraph, &c));
       printf("\033[2J");
       printf("%s\n", paragraph);
     }
