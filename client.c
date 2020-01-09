@@ -30,7 +30,7 @@ int main(){
   int fd;
   FILE *f;
   char paragraph[PAR_LEN];
-  char typed[PAR_LEN + 10] = "";
+  char typed[PAR_LEN * 2] = "";
   // char c[10];
   char c;
   f = fopen("paragraph.txt", "r");
