@@ -8,6 +8,8 @@
 #include <time.h>
 #include <dirent.h>
 #include <signal.h>
+
+#define PAR_LEN 10
 // #include <sys/wait.h>
 // #include <sys/ipc.h>
 // #include <sys/shm.h>
@@ -35,7 +37,7 @@ char * char_check(char * paragraph, char c){
 int main(){
   int fd;
   FILE *f;
-  char paragraph[10];
+  char paragraph[PAR_LEN];
   // char c[10];
   char c;
   f = fopen("paragraph.txt", "r");
@@ -43,10 +45,10 @@ int main(){
     printf("Error: %s\n", strerror(errno));
     return 1;
   }
-  fgets(paragraph, 10, f);
+  fgets(paragraph, PAR_LEN, f);
   paragraph[strlen(paragraph) - 1] = '\0';
   printf("\033[2J");
-  printf("paragraph: %s\n", paragraph);
+  printf("'%s'\n", paragraph);
   fflush(stdout);
   while(paragraph && strcmp(paragraph, "")){
     c = getchar();
