@@ -28,43 +28,36 @@ char * char_check(char * paragraph, char * c){
   return paragraph;
 }
 int main(){
-  int fd;
-  FILE *f;
-  char buffer[1024];
-  char c[1];
-  f = fopen("paragraph.txt", "r");
-  if (f == NULL){
-    printf("Error: %s\n", strerror(errno));
-    return 1;
-  }
-  // fd = open("paragraph.txt", O_RDONLY);
-  // if (fd < 0){
+  // int fd;
+  // FILE *f;
+  // char buffer[1024];
+  char c[100];
+  // f = fopen("paragraph.txt", "r");
+  // if (f == NULL){
   //   printf("Error: %s\n", strerror(errno));
   //   return 1;
   // }
-  fgets(buffer, 1024, f);
-  buffer[strlen(buffer) - 1] = '\0';
-  // printf("\033[2J");
-  printf("paragraph: %s\n", buffer);
-  printf("Enter some letter: \n");
-  fgets(c, 1, stdin);
-  c[strlen(c) - 1] = '\0';
-  printf("You typed: %s\n", c);
+  // // fd = open("paragraph.txt", O_RDONLY);
+  // // if (fd < 0){
+  // //   printf("Error: %s\n", strerror(errno));
+  // //   return 1;
+  // // }
+  // fgets(buffer, 1024, f);
+  // buffer[strlen(buffer) - 1] = '\0';
+  // // printf("\033[2J");
+  // printf("paragraph: %s\n", buffer);
+  // printf("Enter some letter: \n");
+  // fgets(c, 1, stdin);
   while(1){
-    fgets(c, 1, stdin);
+    printf("shell $: ");
+    fgets(c, 100, stdin);
     c[strlen(c) - 1] = '\0';
-    // if (c){
-    //   printf("You typed: %s\n", c);
-    //
-    // }
+    printf("You typed: %s\n", c);
   }
-  // while(buffer){
-  //   printf("%s\n", buffer);
-  //   scanf("%s", a_word);
-  //   fgets(c, 1, stdin);
-  //   printf("\033[2J");
-  //   strcpy(buffer, char_check(buffer, c));
+    // strcpy(buffer, char_check(buffer, c));
+    // printf("\033[2J");
+    // printf("%s\n", buffer);
   // }
   printf("Race over!\n");
-  // close(fd);
+  // fclose(f);
 }

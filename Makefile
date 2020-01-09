@@ -6,6 +6,7 @@ client.o: client.c
 
 clean:
 	rm *.o
+	rm *.out
 	rm *~
 
 run:
