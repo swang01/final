@@ -25,7 +25,7 @@
 int char_check(char * paragraph, char * c){
   printf("paragraph: %s| c: %s\n", paragraph, c);
   printf("paragraph[0]: %c | c[0]: %c\n", paragraph[0], c[0]);
-  if (c[0] = paragraph[0]){ //correctly typed
+  if (c[0] == paragraph[0]){ //correctly typed
     paragraph++;
     printf("updated paragraph: %s\n", paragraph);
     return 1;
@@ -36,7 +36,7 @@ int main(){
   int fd;
   FILE *f;
   char paragraph[1024];
-  char c[2];
+  char c[10];
   f = fopen("paragraph.txt", "r");
   if (f == NULL){
     printf("Error: %s\n", strerror(errno));
@@ -47,7 +47,7 @@ int main(){
   // printf("\033[2J");
   printf("paragraph: %s\n", paragraph);
   while(paragraph){
-    fgets(c, 2, stdin);
+    fgets(c, 10, stdin);
     c[strlen(c) - 1] = '\0';
     char_check(paragraph, c);
       // printf("\033[2J");
