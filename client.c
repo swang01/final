@@ -8,18 +8,20 @@
 
 /*
   char_check(char * paragraph, char c)
-  paragarph: a pointer to the current position in the paragraph being typed
+  paragraph: a pointer to the current position in the paragraph being typed
+  typed: a pointer for the letters typed already
   c: a char to check against
   if: c matches char at the beginning of the paragraph, paragraph gets incremented by 1 (character was typed correctly)
   else: nothing happens
   returns paragraph shifted over one char if c matched the first char of paragraph
           otherwise returns the unchanged paragraph
 */
-char * char_check(char * paragraph, char c){
+char * char_check(char * paragraph, char * typed, char c){
   // printf("paragraph: %s \n c: %s\n", paragraph, c);
   // printf("paragraph[0]: %c | c[0]: %c\n", paragraph[0], c[0]);
   if (c == paragraph[0]){ //correctly typed
-    paragraph++;
+    paragraph++; //update the part to still type
+    strcat(typed, &c); //update the typed part
     // printf("updated paragraph: %s\n", paragraph);
   }
   return paragraph;
@@ -28,6 +30,7 @@ int main(){
   int fd;
   FILE *f;
   char paragraph[PAR_LEN];
+  char typed[PAR_LEN] = "";
   // char c[10];
   char c;
   f = fopen("paragraph.txt", "r");
@@ -44,8 +47,9 @@ int main(){
     c = getchar();
     getchar(); //"absorbs" '\n' from pressing ENTER
     if (c != '\r' && c != EOF && c != '\t'){
-      strcpy(paragraph, char_check(paragraph, c));
+      strcpy(paragraph, char_check(paragraph, typed, c));
       printf("\033[2J");
+      printf("Typed: %s\n\n\n", typed);
       printf("'%s'\n", paragraph);
     }
     // fgets(c, 10, stdin);
