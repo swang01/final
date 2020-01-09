@@ -12,6 +12,7 @@
 // #include <sys/ipc.h>
 // #include <sys/shm.h>
 // #include <sys/types.h>
+#include <conio.h> //to get unbuffered input
 
 /*
   char_check(char * paragraph, char c)
@@ -23,11 +24,11 @@
           otherwise returns the unchanged paragraph
 */
 char * char_check(char * paragraph, char * c){
-  printf("paragraph: %s \n c: %s\n", paragraph, c);
-  printf("paragraph[0]: %c | c[0]: %c\n", paragraph[0], c[0]);
+  // printf("paragraph: %s \n c: %s\n", paragraph, c);
+  // printf("paragraph[0]: %c | c[0]: %c\n", paragraph[0], c[0]);
   if (c[0] == paragraph[0]){ //correctly typed
     paragraph++;
-    printf("updated paragraph: %s\n", paragraph);
+    // printf("updated paragraph: %s\n", paragraph);
   }
   return paragraph;
 }
@@ -43,15 +44,19 @@ int main(){
   }
   fgets(paragraph, 1024, f);
   paragraph[strlen(paragraph) - 1] = '\0';
-  // printf("\033[2J");
+  printf("\033[2J");
   printf("paragraph: %s\n", paragraph);
+  fflush(stdout);
   while(paragraph){
-    fgets(c, 10, stdin);
-    c[strlen(c) - 1] = '\0';
-    strcpy(paragraph, char_check(paragraph, c));
-      // printf("\033[2J");
-      // printf("Updated: %s\n", paragraph);
-    printf("You typed: %s\n", c);
+    while((c = getch()) != '\r' && c != EOF){ // a marker to indicate end of input
+
+      strcpy(paragraph, char_check(paragraph, c));
+      printf("\033[2J");
+      printf("%s\n", paragraph);
+    }
+    // fgets(c, 10, stdin);
+    // c[strlen(c) - 1] = '\0';
+    // printf("You typed: %s\n", c);
   }
   printf("Race over!\n");
   // fclose(f);
