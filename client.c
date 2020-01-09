@@ -30,7 +30,7 @@ int main(){
   int fd;
   FILE *f;
   char paragraph[PAR_LEN];
-  char typed[PAR_LEN + 1] = "";
+  char typed[PAR_LEN + 10] = "";
   // char c[10];
   char c;
   f = fopen("paragraph.txt", "r");
@@ -49,7 +49,7 @@ int main(){
     if (c != '\r' && c != EOF && c != '\t'){
       strcpy(paragraph, char_check(paragraph, typed, c));
       printf("\033[2J");
-      printf("Typed: %s\n\n\n", typed);
+      printf("Typed: '%s' | length of typed: %d\n\n\n", typed, strlen(typed));
       printf("'%s'\n", paragraph);
     }
     // fgets(c, 10, stdin);
