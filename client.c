@@ -1,15 +1,5 @@
-#include <fcntl.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <time.h>
-#include <dirent.h>
-#include <signal.h>
+#include "headers.h"
 
-#define PAR_LEN 10
 // #include <sys/wait.h>
 // #include <sys/ipc.h>
 // #include <sys/shm.h>
