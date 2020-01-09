@@ -15,49 +15,46 @@
 
 /*
   char_check(char * paragraph, char c)
-  pargarph: a pointer to the current position in the paragraph being typed
+  paragarph: a pointer to the current position in the paragraph being typed
   c: a char to check against
   if: c matches char at the beginning of the paragraph, paragraph gets incremented by 1 (character was typed correctly)
   else: nothing happens
-  returns the "updated" pointer (position in paragraph)
+  returns 0 if nothing changed
+  returns 1 if paragraph was changed
 */
-char * char_check(char * paragraph, char * c){
-  if (!strcmp(c, paragraph)){
+int char_check(char * paragraph, char * c){
+  printf("paragraph[0]: %c\n | c: %c", paragraph[0], c);
+  if (c[0] = paragraph[0]){
     paragraph++;
+    return 1;
   }
-  return paragraph;
+  return 0;
 }
 int main(){
-  // int fd;
-  // FILE *f;
-  // char buffer[1024];
-  char c[100];
-  // f = fopen("paragraph.txt", "r");
-  // if (f == NULL){
-  //   printf("Error: %s\n", strerror(errno));
-  //   return 1;
-  // }
-  // // fd = open("paragraph.txt", O_RDONLY);
-  // // if (fd < 0){
-  // //   printf("Error: %s\n", strerror(errno));
-  // //   return 1;
-  // // }
-  // fgets(buffer, 1024, f);
-  // buffer[strlen(buffer) - 1] = '\0';
-  // // printf("\033[2J");
-  // printf("paragraph: %s\n", buffer);
-  // printf("Enter some letter: \n");
-  // fgets(c, 1, stdin);
-  while(1){
-    printf("shell $: ");
-    fgets(c, 100, stdin);
+  int fd;
+  FILE *f;
+  char paragraph[1024];
+  char c[2];
+  f = fopen("paragraph.txt", "r");
+  if (f == NULL){
+    printf("Error: %s\n", strerror(errno));
+    return 1;
+  }
+  fgets(paragraph, 1024, f);
+  paragraph[strlen(paragraph) - 1] = '\0';
+  printf("\033[2J");
+  printf("paragraph: %s\n", paragraph);
+  fgets(c, 2, stdin);
+  while(paragraph){
+    printf("Enter some letter: \n");
+    fgets(c, 2, stdin);
     c[strlen(c) - 1] = '\0';
+    if(char_check(paragraph, c)){ //correctly typed
+      printf("\033[2J");
+      printf("Updated: %s\n", paragraph);
+    }
     printf("You typed: %s\n", c);
   }
-    // strcpy(buffer, char_check(buffer, c));
-    // printf("\033[2J");
-    // printf("%s\n", buffer);
-  // }
   printf("Race over!\n");
   // fclose(f);
 }
