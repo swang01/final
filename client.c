@@ -36,7 +36,8 @@ int main(){
   int fd;
   FILE *f;
   char paragraph[1024];
-  char c[10];
+  // char c[10];
+  char c;
   f = fopen("paragraph.txt", "r");
   if (f == NULL){
     printf("Error: %s\n", strerror(errno));
@@ -50,7 +51,7 @@ int main(){
   while(paragraph){
     c = getchar();
     getchar(); //"absorbs" '\n' from pressing ENTER
-    if (c != '\r' && c != EOF) && c != '\t'){
+    if (c != '\r' && c != EOF && c != '\t'){
       strcpy(paragraph, char_check(paragraph, c));
       printf("\033[2J");
       printf("%s\n", paragraph);
