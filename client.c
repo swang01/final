@@ -12,7 +12,7 @@
 // #include <sys/ipc.h>
 // #include <sys/shm.h>
 // #include <sys/types.h>
-#include <conio.h> //to get unbuffered input
+// #include <conio.h> //to get unbuffered input (and also doesn't work T-T)
 
 /*
   char_check(char * paragraph, char c)
@@ -48,8 +48,9 @@ int main(){
   printf("paragraph: %s\n", paragraph);
   fflush(stdout);
   while(paragraph){
-    while((c = getch()) != '\r' && c != EOF){ // a marker to indicate end of input
-
+    c = getchar();
+    getchar(); //"absorbs" '\n' from pressing ENTER
+    if (c != '\r' && c != EOF) && c != '\t'){
       strcpy(paragraph, char_check(paragraph, c));
       printf("\033[2J");
       printf("%s\n", paragraph);
