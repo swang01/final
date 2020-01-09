@@ -48,7 +48,7 @@ int main(){
   printf("\033[2J");
   printf("paragraph: %s\n", paragraph);
   fflush(stdout);
-  while(paragraph && !strcmp(paragraph, "")){
+  while(paragraph && strcmp(paragraph, "")){
     c = getchar();
     getchar(); //"absorbs" '\n' from pressing ENTER
     if (c != '\r' && c != EOF && c != '\t'){
