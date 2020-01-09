@@ -23,6 +23,7 @@
   returns 1 if paragraph was changed
 */
 int char_check(char * paragraph, char * c){
+  printf("paragraph: %s| c: %s\n", paragraph, c);
   printf("paragraph[0]: %c | c[0]: %c\n", paragraph[0], c[0]);
   if (c[0] = paragraph[0]){ //correctly typed
     paragraph++;
