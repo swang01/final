@@ -48,7 +48,7 @@ int main(){
   while(paragraph){
     fgets(c, 10, stdin);
     c[strlen(c) - 1] = '\0';
-    paragraph = char_check(paragraph, c);
+    strcpy(paragraph, char_check(paragraph, c));
       // printf("\033[2J");
       // printf("Updated: %s\n", paragraph);
     printf("You typed: %s\n", c);
