@@ -23,10 +23,10 @@
   returns paragraph shifted over one char if c matched the first char of paragraph
           otherwise returns the unchanged paragraph
 */
-char * char_check(char * paragraph, char * c){
+char * char_check(char * paragraph, char c){
   // printf("paragraph: %s \n c: %s\n", paragraph, c);
   // printf("paragraph[0]: %c | c[0]: %c\n", paragraph[0], c[0]);
-  if (c[0] == paragraph[0]){ //correctly typed
+  if (c == paragraph[0]){ //correctly typed
     paragraph++;
     // printf("updated paragraph: %s\n", paragraph);
   }
@@ -35,7 +35,7 @@ char * char_check(char * paragraph, char * c){
 int main(){
   int fd;
   FILE *f;
-  char paragraph[1024];
+  char paragraph[10];
   // char c[10];
   char c;
   f = fopen("paragraph.txt", "r");
@@ -43,7 +43,7 @@ int main(){
     printf("Error: %s\n", strerror(errno));
     return 1;
   }
-  fgets(paragraph, 1024, f);
+  fgets(paragraph, 10, f);
   paragraph[strlen(paragraph) - 1] = '\0';
   printf("\033[2J");
   printf("paragraph: %s\n", paragraph);
