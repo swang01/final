@@ -36,16 +36,16 @@ int main(int argc, char **argv){
   // char c[10];
   char c;
 
-  int listen_socket;
-  int client_socket;
-  int f;
-  int subserver_count = 0;
+  int server_socket;
   char buffer[BUFFER_SIZE];
 
   //set of file descriptors to read from
   fd_set read_fds;
 
-  listen_socket = server_setup();
+  if (argc == 2)
+    server_socket = client_setup( argv[1]);
+  else
+    server_socket = client_setup( TEST_IP );
   // ---------------------------------------------------------------------------
   // getting paragraph content from text file
   f = fopen("paragraph.txt", "r");
