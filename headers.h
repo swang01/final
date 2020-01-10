@@ -15,7 +15,7 @@
 #define FILENAME "paragraph.txt"
 
 int random_num();
-int random_paragraph();
+void random_paragraph();
 
 #include <curses.h>
 

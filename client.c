@@ -46,7 +46,7 @@ void random_paragraph(){
     paragraphs[i] = line;
     i++;
   }
-  printf(paragraphs(random()));
+  printf("Paragraph: %s", paragraphs[random()]);
 }
 
 int main(){
