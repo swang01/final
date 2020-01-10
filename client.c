@@ -28,12 +28,16 @@ char * char_check(char * paragraph, char * typed, char c){
 }
 
 int main(){
+  //======VARIABLE==DECLARATION======
   int fd;
   FILE *f;
   char paragraph[PAR_LEN];
   char typed[PAR_LEN * 2] = "";
   // char c[10];
   char c;
+  time_t start = time(NULL);
+  //=================================
+  
   f = fopen("paragraph.txt", "r");
   if (f == NULL){
     printf("Error: %s\n", strerror(errno));
@@ -50,8 +54,8 @@ int main(){
     if (c != '\r' && c != EOF && c != '\t'){
       strcpy(paragraph, char_check(paragraph, typed, c));
       printf("\033[2J");
-      printf("Typed: '%s' | length of typed: %d\n\n\n", typed, strlen(typed));
-      printf("'%s' | length of paragraph: %d\n", paragraph, strlen(paragraph));
+      printf("Typed: '%s' | length of typed: %ld\n\n\n", typed, strlen(typed));
+      printf("'%s' | length of paragraph: %ld\n", paragraph, strlen(paragraph));
     }
     // fgets(c, 10, stdin);
     // c[strlen(c) - 1] = '\0';

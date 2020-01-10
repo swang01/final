@@ -8,7 +8,7 @@
 #include <time.h>
 #include <dirent.h>
 #include <signal.h>
-#include <color.h>
+#include <curses.h>
 
 #define PAR_LEN 10
 void print_paragraph(char * paragraph, char * typed);
