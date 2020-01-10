@@ -24,6 +24,7 @@ char * char_check(char * paragraph, char c){
   }
   return paragraph;
 }
+
 int main(){
   int fd;
   FILE *f;
