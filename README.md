@@ -5,13 +5,11 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
   We are attempting to create a type-racing game, modeled after the game NitroType which you can find and play at nitrotype.com. To play, up to 4 players will join a game. The “race host” has the option to start when everyone is ready by pressing a button. After a short delay, users will type a paragraph of text selected randomly from a database as fast, and accurately as they can before the other players finish. Each player (not including bots) is given a boost that players can use once per game to skip a word. Statistics like words per minute and accuracy as well as positions will be displayed in real time. 
 
 ### Devlog
-**Thurs, 1/2/2020 - Tues, 1/7/2020**
+# Thurs, 1/2/2020 - Tues, 1/7/2020
  - Proposal got finalized after fixing the initial issues
  - Initial empty files were added
  
-**Wed, 1/8/2020**
- - Vivian:
-   - 
+# Wed, 1/8/2020
  - Rachel:
    - Completed char_check function
    - Having issues with ending the race
@@ -19,9 +17,9 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
  - Steve: 
    - Added the paragraphs paragraph.txt
  
-**Thurs, 1/9/2020**
+# Thurs, 1/9/2020
  - Vivian:
-   - 
+   - Began working on displaying the paragraph as the user types and tried to figure out how to implement colors into terminal
  - Rachel:
    - Got the game to end properly
    - User inputing and typing works, but you have to press enter after every key in order to type which is very annoying *ugh*
