@@ -1,4 +1,5 @@
 #include "headers.h"
+#include "networking.h"
 
 // #include <sys/wait.h>
 // #include <sys/ipc.h>
@@ -6,8 +7,7 @@
 // #include <sys/types.h>
 // #include <conio.h> //to get unbuffered input (and also doesn't work T-T)
 
-/*
-  char_check(char * paragraph, char c)
+/* char_check(char * paragraph, char c)
   paragraph: a pointer to the current position in the paragraph being typed
   typed: a pointer for the letters typed already
   c: a char to check against
@@ -26,13 +26,17 @@ char * char_check(char * paragraph, char * typed, char c){
   }
   return paragraph;
 }
-int main(){
+
+
+int main(int argc, char **argv){
   int fd;
   FILE *f;
   char paragraph[PAR_LEN];
   char typed[PAR_LEN * 2] = "";
   // char c[10];
   char c;
+  // ---------------------------------------------------------------------------
+  // getting paragraph content from text file
   f = fopen("paragraph.txt", "r");
   if (f == NULL){
     printf("Error: %s\n", strerror(errno));
@@ -43,19 +47,50 @@ int main(){
   printf("\033[2J");
   printf("'%s'\n", paragraph);
   fflush(stdout);
+  // flush buffer to immediately print
+  //----------------------------------------------------------------------------
+
+  //getting user input (still need to utilize curses instead of basic stdin)
   while(paragraph && strcmp(paragraph, "")){
     c = getchar();
     getchar(); //"absorbs" '\n' from pressing ENTER
     if (c != '\r' && c != EOF && c != '\t'){
       strcpy(paragraph, char_check(paragraph, typed, c));
       printf("\033[2J");
-      printf("Typed: '%s' | length of typed: %d\n\n\n", typed, strlen(typed));
-      printf("'%s' | length of paragraph: %d\n", paragraph, strlen(paragraph));
-    }
-    // fgets(c, 10, stdin);
-    // c[strlen(c) - 1] = '\0';
-    // printf("You typed: %s\n", c);
+      printf("TYPE!!!!\n\n\n\n");
+      printf("Typed: '%s'\n\n", typed);
+      printf("> '%s' \n", paragraph);
+      // printf("Typed: '%s' | length of typed: %d\n\n\n", typed, strlen(typed));
+      // printf("'%s' | length of paragraph: %d\n", paragraph, strlen(paragraph));
+      //select() modifies read_fds
+    //we must reset it at each iteration
+    FD_ZERO(&read_fds);
+    FD_SET(STDIN_FILENO, &read_fds); //add stdin to fd set
+    FD_SET(server_socket, &read_fds); //add socket to fd set
+
+    //select will block until either fd is ready
+    select(server_socket + 1, &read_fds, NULL, NULL, NULL);
+
+    if (FD_ISSET(STDIN_FILENO, &read_fds)) {
+      fgets(buffer, sizeof(buffer), stdin);
+      *strchr(buffer, '\n') = 0;
+      write(server_socket, buffer, sizeof(buffer));
+      read(server_socket, buffer, sizeof(buffer));
+      printf("received: [%s]\n", buffer);
+    }//end stdin select
+
+    //currently the server is not set up to
+    //send messages to all the clients, but
+    //this would allow for broadcast messages
+    if (FD_ISSET(server_socket, &read_fds)) {
+      read(server_socket, buffer, sizeof(buffer));
+      printf("[SERVER BROADCAST] [%s]\n", buffer);
+      printf("enter data: ");
+      //the above printf does not have \n
+      //flush the buffer to immediately print
+      fflush(stdout);
+    }//end socket select
   }
   printf("Race over!\n");
-  // fclose(f);
+  fclose(f);
 }
