@@ -35,6 +35,17 @@ int main(int argc, char **argv){
   char typed[PAR_LEN * 2] = "";
   // char c[10];
   char c;
+
+  int listen_socket;
+  int client_socket;
+  int f;
+  int subserver_count = 0;
+  char buffer[BUFFER_SIZE];
+
+  //set of file descriptors to read from
+  fd_set read_fds;
+
+  listen_socket = server_setup();
   // ---------------------------------------------------------------------------
   // getting paragraph content from text file
   f = fopen("paragraph.txt", "r");
