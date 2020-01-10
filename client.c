@@ -29,7 +29,7 @@ char * char_check(char * paragraph, char * typed, char c){
 
 void random(){
   srand(time(NULL));
-  int num = rand() % 30
+  int num = rand() % 30;
 }
 
 void random_paragraph(){
@@ -40,7 +40,7 @@ void random_paragraph(){
   if (errno){
     printf("errno %d error: %s\n", errno, strerror(errno));
   }
-  while(fgets(line, 1000, fd)){
+  while(fgets(line, 10000, fd)){
     fgets(line,10000,fd);
     paragraphs[i] = line;
     i++;
