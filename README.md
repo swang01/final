@@ -25,7 +25,7 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
    - User inputing and typing works, but you have to press enter after every key in order to type which is very annoying *ugh*
    - Added a string to keep track of what was already typed (for display function to be implemented later)
      - Updated parameters for char_check accordingly
- - Steve
+ - Steve:
    - 
 
  
