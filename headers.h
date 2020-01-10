@@ -17,7 +17,7 @@
 int random_num();
 void random_paragraph();
 
-#include <curses.h>
+//#include <curses.h>
 
 #define PAR_LEN 10
 void print_paragraph(char * paragraph, char * typed);
