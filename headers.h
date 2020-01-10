@@ -14,12 +14,11 @@
 #define PAR_LEN 10
 #define FILENAME "paragraph.txt"
 
-char * char_check(char * paragraph, char c);
-void random_paragraph();
+int random_num();
+int random_paragraph();
 
 #include <curses.h>
 
 #define PAR_LEN 10
 void print_paragraph(char * paragraph, char * typed);
 char * char_check(char * paragraph, char * typed, char c);
-

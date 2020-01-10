@@ -27,9 +27,10 @@ char * char_check(char * paragraph, char * typed, char c){
   return paragraph;
 }
 
-void random(){
+int random_num(){
   srand(time(NULL));
-  int num = rand() % 30;
+  int num = rand() % 31;
+  return num;
 }
 
 void random_paragraph(){
@@ -45,6 +46,7 @@ void random_paragraph(){
     paragraphs[i] = line;
     i++;
   }
+  printf(paragraphs(random()));
 }
 
 int main(){
@@ -57,7 +59,7 @@ int main(){
   char c;
   time_t start = time(NULL);
   //=================================
-  
+
   f = fopen("paragraph.txt", "r");
   if (f == NULL){
     printf("Error: %s\n", strerror(errno));
