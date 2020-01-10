@@ -14,7 +14,8 @@
 #define PAR_LEN 10
 #define FILENAME "paragraph.txt"
 
-void random_paragraph();
+int random_num();
+int random_paragraph();
 
 #include <curses.h>
 
