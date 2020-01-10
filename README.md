@@ -15,7 +15,7 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
    - Having issues with ending the race
    - Attempted to find a library to utilize for real-time typing but didn't get it --> ask later in class
  - Steve: 
-   - Added the paragraphs paragraph.txt
+   - Added the 30 random paragraphs to paragraphs.txt
  
 # Thurs, 1/9/2020
  - Vivian:
@@ -26,7 +26,7 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
    - Added a string to keep track of what was already typed (for display function to be implemented later)
      - Updated parameters for char_check accordingly
  - Steve:
-   - 
+   - Worked on functions to select a random paragraph from the file paragraphs.txt
 
  
 ### User Interface
