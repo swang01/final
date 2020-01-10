@@ -4,6 +4,9 @@ all: client.o
 client.o: client.c
 	gcc -c client.c
 
+sub_server.o: sub_server.c
+	gcc -c sub_server.c
+
 clean:
 	rm *.o
 	rm *.out
