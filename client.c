@@ -60,12 +60,13 @@ int main(){
   time_t start = time(NULL);
   //=================================
 
-  f = fopen("paragraph.txt", "r");
+/*  f = fopen("paragraph.txt", "r");
   if (f == NULL){
     printf("Error: %s\n", strerror(errno));
     return 1;
   }
-  fgets(paragraph, PAR_LEN, f);
+  fgets(paragraph, PAR_LEN, f); */
+  random_paragraph();
   paragraph[strlen(paragraph) - 1] = '\0';
   printf("\033[2J");
   printf("'%s'\n", paragraph);
