@@ -11,6 +11,5 @@
 #include <color.h>
 
 #define PAR_LEN 10
-
-char * char_check(char * paragraph, char c);
 void print_paragraph(char * paragraph, char * typed);
+char * char_check(char * paragraph, char * typed, char c);
