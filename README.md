@@ -4,6 +4,31 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
 ### Description
   We are attempting to create a type-racing game, modeled after the game NitroType which you can find and play at nitrotype.com. To play, up to 4 players will join a game. The “race host” has the option to start when everyone is ready by pressing a button. After a short delay, users will type a paragraph of text selected randomly from a database as fast, and accurately as they can before the other players finish. Each player (not including bots) is given a boost that players can use once per game to skip a word. Statistics like words per minute and accuracy as well as positions will be displayed in real time. 
 
+### Devlog
+# Thurs, 1/2/2020 - Tues, 1/7/2020
+ - Proposal got finalized after fixing the initial issues
+ - Initial empty files were added
+ 
+# Wed, 1/8/2020
+ - Rachel:
+   - Completed char_check function
+   - Having issues with ending the race
+   - Attempted to find a library to utilize for real-time typing but didn't get it --> ask later in class
+ - Steve: 
+   - Added the paragraphs paragraph.txt
+ 
+# Thurs, 1/9/2020
+ - Vivian:
+   - Began working on displaying the paragraph as the user types and tried to figure out how to implement colors into terminal
+ - Rachel:
+   - Got the game to end properly
+   - User inputing and typing works, but you have to press enter after every key in order to type which is very annoying *ugh*
+   - Added a string to keep track of what was already typed (for display function to be implemented later)
+     - Updated parameters for char_check accordingly
+ - Steve:
+   - 
+
+ 
 ### User Interface
   Users will be able to log onto separate computers and sync up in order to start a race. When players connect, their names will appear on the screen for all players connected and the “race host” who created the race will have the option to start. Before the race officially starts, a short delay is given to prepare everyone to get ready. During the race, players will have to type a paragraph of text displayed at the bottom of the screen as quickly and accurately as possible. While typing, there will be an indicator showing what the player has already typed. If the player makes a mistake, the indicator will stay in place until the player types the correct character. Players can also see the positions of all racers with a progress bar and who is currently in first place. A words per minute statistic (number of characters typed divided by 5 divided by the total time spent typing) and accuracy percentage are calculated for each player and those individual values are shown and updated to each player during the course of the race. Players can also skip a word by hitting the Enter key and using a boost to skip the current word. 
   
@@ -54,4 +79,3 @@ Friday 1/10: Work with the shared file (source file of passage) should be about 
 Monday 1/13: Multiple computers should be able to race simultaneously. Work out kinks in shared memory to make sure racing can occur in real time.
 
 Wednesday 1/15: Project should be done, last-minute debugging and adding addition features if possible
-
