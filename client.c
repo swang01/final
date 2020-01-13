@@ -26,22 +26,25 @@ char * char_check(char * paragraph, char * typed, char c){
   }
   return paragraph;
 }
+
 int main(){
-  //=====VARIABLE=DECLARATION=====
+  //variable declaration
   int fd;
   FILE *f;
   char paragraph[PAR_LEN];
+  char * cur;
   char typed[PAR_LEN * 2] = "";
-  // char c[10];
-  char c;
-  //=====NCURSES=INITIALIZATION=====
+  int c;
+  int yMax, xMax;
+ 
+  //Ncurses initialization
   initscr();
   cbreak();
-  noecho();
+  //noecho();
   nonl();
   intrflush(stdscr,FALSE);
-  keypad(stdscr,TRUE);
-  //==============================
+
+  //Get paragraph
   f = fopen("paragraph.txt", "r");
   if (f == NULL){
     printf("Error: %s\n", strerror(errno));
@@ -49,22 +52,29 @@ int main(){
   }
   fgets(paragraph, PAR_LEN, f);
   paragraph[strlen(paragraph) - 1] = '\0';
-  printf("\033[2J");
-  printf("'%s'\n", paragraph);
-  fflush(stdout);
-  while(paragraph && strcmp(paragraph, "")){
-    c = getchar();
-    getchar(); //"absorbs" '\n' from pressing ENTER
-    if (c != '\r' && c != EOF && c != '\t'){
-      strcpy(paragraph, char_check(paragraph, typed, c));
-      printf("\033[2J");
-      printf("Typed: '%s' | length of typed: %ld\n\n\n", typed, strlen(typed));
-      printf("'%s' | length of paragraph: %ld\n", paragraph, strlen(paragraph));
-    }
-    // fgets(c, 10, stdin);
-    // c[strlen(c) - 1] = '\0';
-    // printf("You typed: %s\n", c);
+  printw("%s\n",paragraph);
+  //cur = paragraph
+
+  //Get screen size
+  getmaxyx(stdscr, yMax, xMax);
+
+  //Create new window for input
+  WINDOW * inputwin = newwin(3,xMax-20,yMax-5,5);
+  //box(inputwin, 0,0); //Draw a box around the input box
+  refresh();
+  wrefresh(inputwin);
+  keypad(inputwin, TRUE);
+  printw("%ld\n", cur);
+  if (cur){
+    printw("hello");
   }
-  printf("Race over!\n");
-  // fclose(f);
+  while (paragraph){
+    printw("%s\n", paragraph);
+    c = wgetch(inputwin);
+    char_check(paragraph, typed,c);
+  }
+ 
+  //Terminate program
+  getch(); //pauses screen so it doesnt exit immediately. Press any key to exit
+  endwin();
 }
