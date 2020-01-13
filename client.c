@@ -40,7 +40,7 @@ void print_paragraph(char * paragraph, char * typed){
   attroff(COLOR_PAIR(1));
 
   //Print the rest of the paragraph in white
-  printw("%s\n", paragraph);
+  printw("'%s'\n", paragraph);
 }
 
 int random_num(){
