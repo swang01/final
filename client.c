@@ -40,19 +40,17 @@ char* random_paragraph(){
   FILE *f;
   f = fopen("paragraph.txt", "r");
   int rand = random_num();
+  printf("random number: %d\n", rand);
   if (f < 0){
     printf("errno %d error: %s\n", errno, strerror(errno));
   }
-  printf("4\n");
-  while (fgets(line, PAR_LEN, f) != NULL){
-    i++;
-    printf("%d\n", i);
-    if (rand <= i){
+  while (fgets(line, PAR_LEN , f) != NULL){
+    if (i == rand){
       strcpy(paragraph,line);
       puts(paragraph);
     }
+    i++;
   }
-  printf("5\n");
   /*int fd;
   FILE *f;
   char paragraph[PAR_LEN];
@@ -77,7 +75,7 @@ char* random_paragraph(){
     i++;
   } */
   fclose(f);
-  return(paragraph);
+  return paragraph;
 }
 
 int main(){

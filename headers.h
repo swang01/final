@@ -11,7 +11,7 @@
 
 #include <time.h>
 
-#define PAR_LEN 80
+#define PAR_LEN 800
 #define FILENAME "paragraph.txt"
 
 int random_num();
