@@ -36,11 +36,11 @@ void print_paragraph(char * paragraph, char * typed){
 
   //Print typed characters in Green
   attron(COLOR_PAIR(1));
-  mvprintw(0,0,"%s", typed);
+  mvprintw(0,0,"'%s", typed);
   attroff(COLOR_PAIR(1));
 
   //Print the rest of the paragraph in white
-  printw("'%s'\n", paragraph);
+  printw("%s'\n", paragraph);
 }
 
 int random_num(){
