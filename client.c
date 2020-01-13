@@ -57,7 +57,7 @@ void random_paragraph(){
   f = fopen("paragraph.txt", "r");
   if (f == NULL){
     printf("Error: %s\n", strerror(errno));
-    return 1;
+    return;
   }
   while(fgets(line, 10000, f)){
     fgets(line,10000,f);
