@@ -34,12 +34,31 @@ int random_num(){
 }
 
 char* random_paragraph(){
-  int fd;
+  char line[PAR_LEN];
+  char paragraph[PAR_LEN];
+  int i = 0;
   FILE *f;
-  char paragraph_array[31];
+  f = fopen("paragraph.txt", "r");
+  int rand = random_num();
+  if (f < 0){
+    printf("errno %d error: %s\n", errno, strerror(errno));
+  }
+  printf("4\n");
+  while (fgets(line, PAR_LEN, f) != NULL){
+    i++;
+    printf("%d\n", i);
+    if (rand <= i){
+      strcpy(paragraph,line);
+      puts(paragraph);
+    }
+  }
+  printf("5\n");
+  /*int fd;
+  FILE *f;
   char paragraph[PAR_LEN];
   int i = 0;
   int random = random_num();
+  printf("%d", random);
   f = fopen("paragraph.txt", "r");
   if (f < 0){
     printf("errno %d error: %s\n", errno, strerror(errno));
@@ -47,7 +66,6 @@ char* random_paragraph(){
   while ((i < random) && (fgets(paragraph, PAR_LEN, f) != NULL)){
     fgets(paragraph, PAR_LEN, f);
     i++;
-    puts(paragraph);
   }
   printf("hello");
   //fgets(paragraph, PAR_LEN, f);
@@ -63,13 +81,14 @@ char* random_paragraph(){
 }
 
 int main(){
+  printf("3\n");
   //======VARIABLE==DECLARATION======
   int fd;
   FILE *f;
   char* paragraph;
   char typed[PAR_LEN * 2] = "";
   char c;
-  time_t start = time(NULL);
+  //time_t start = time(NULL);
   //=================================
 
 /*  f = fopen("paragraph.txt", "r");
@@ -78,7 +97,9 @@ int main(){
     return 1;
   } */
   //fgets(paragraph, PAR_LEN, f);
+  printf("1\n");
   paragraph = random_paragraph();
+  printf("2\n");
   paragraph[strlen(paragraph) - 1] = '\0';
   //printf("\033[2J");
   printf("'%s'\n", paragraph);
