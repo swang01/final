@@ -49,7 +49,7 @@ int main(){
   FILE *f;
   char * cur;
   char paragraph[PAR_LEN];
-  char typed[PAR_LEN * 2] = "";
+  char typed[PAR_LEN] = "";
   int c;
   int yMax, xMax;
  
