@@ -21,11 +21,26 @@ char * char_check(char * paragraph, char * typed, char c){
   // printf("paragraph[0]: %c | c[0]: %c\n", paragraph[0], c[0]);
   if (c == paragraph[0]){ //correctly typed
     paragraph++; //update the part to still type
-    printw(" %s\n", paragraph);
+    //printw(" %s\n", paragraph);
     strcat(typed, &c); //update the typed part
+    typed[strlen(typed) - 1] = '\0';
     // printf("updated paragraph: %s\n", paragraph);
   }
   return paragraph;
+}
+
+void print_paragraph(char * paragraph, char * typed){
+  start_color();
+  init_pair(1, COLOR_GREEN, COLOR_BLACK);
+  init_pair(2, COLOR_RED, COLOR_BLACK);
+
+  //Print typed characters in Green
+  attron(COLOR_PAIR(1));
+  mvprintw(0,0,"%s", typed);
+  attroff(COLOR_PAIR(1));
+
+  //Print the rest of the paragraph in white
+  printw("%s\n", paragraph);
 }
 
 int main(){
@@ -41,7 +56,7 @@ int main(){
   //Ncurses initialization
   initscr();
   cbreak();
-  //noecho();
+  noecho();
   nonl();
   intrflush(stdscr,FALSE);
 
@@ -53,7 +68,7 @@ int main(){
   }
   fgets(paragraph, PAR_LEN, f);
   paragraph[strlen(paragraph) - 1] = '\0';
-  printw("%s\n",paragraph);
+  //printw("%s\n",paragraph);
 
   //Get screen size
   getmaxyx(stdscr, yMax, xMax);
@@ -69,8 +84,10 @@ int main(){
   
   //Typing paragraph
   while (strcmp(paragraph, "\0")!= 0){
+    print_paragraph(paragraph, typed);
     //printw("%s\n",paragraph);
     c = getch();
+    c = (char) c;
     strcpy(paragraph, char_check(paragraph, typed, c));
   }
   printw("Race Over\n");
