@@ -21,6 +21,7 @@ char * char_check(char * paragraph, char * typed, char c){
   // printf("paragraph[0]: %c | c[0]: %c\n", paragraph[0], c[0]);
   if (c == paragraph[0]){ //correctly typed
     paragraph++; //update the part to still type
+    //printw("%s\n", paragraph);
     strcat(typed, &c); //update the typed part
     // printf("updated paragraph: %s\n", paragraph);
   }
@@ -31,8 +32,8 @@ int main(){
   //variable declaration
   int fd;
   FILE *f;
-  char paragraph[PAR_LEN];
   char * cur;
+  char paragraph[PAR_LEN];
   char typed[PAR_LEN * 2] = "";
   int c;
   int yMax, xMax;
@@ -53,27 +54,26 @@ int main(){
   fgets(paragraph, PAR_LEN, f);
   paragraph[strlen(paragraph) - 1] = '\0';
   printw("%s\n",paragraph);
-  //cur = paragraph
 
   //Get screen size
   getmaxyx(stdscr, yMax, xMax);
 
+  /*
   //Create new window for input
   WINDOW * inputwin = newwin(3,xMax-20,yMax-5,5);
   //box(inputwin, 0,0); //Draw a box around the input box
   refresh();
   wrefresh(inputwin);
   keypad(inputwin, TRUE);
-  printw("%ld\n", cur);
-  if (cur){
-    printw("hello");
-  }
+  */
+  
+  //Typing paragraph
   while (paragraph){
-    printw("%s\n", paragraph);
-    c = wgetch(inputwin);
-    char_check(paragraph, typed,c);
+    //printw("%s\n",paragraph);
+    c = getch();
+    char_check(paragraph, typed, c);
   }
- 
+  
   //Terminate program
   getch(); //pauses screen so it doesnt exit immediately. Press any key to exit
   endwin();
