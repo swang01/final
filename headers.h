@@ -8,8 +8,7 @@
 #include <time.h>
 #include <dirent.h>
 #include <signal.h>
-
-#include <time.h>
+#include <ncurses.h>
 
 #define PAR_LEN 800
 #define FILENAME "paragraph.txt"

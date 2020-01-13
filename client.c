@@ -21,10 +21,26 @@ char * char_check(char * paragraph, char * typed, char c){
   // printf("paragraph[0]: %c | c[0]: %c\n", paragraph[0], c[0]);
   if (c == paragraph[0]){ //correctly typed
     paragraph++; //update the part to still type
+    //printw(" %s\n", paragraph);
     strcat(typed, &c); //update the typed part
+    typed[strlen(typed) - 1] = '\0';
     // printf("updated paragraph: %s\n", paragraph);
   }
   return paragraph;
+}
+
+void print_paragraph(char * paragraph, char * typed){
+  start_color();
+  init_pair(1, COLOR_GREEN, COLOR_BLACK);
+  init_pair(2, COLOR_RED, COLOR_BLACK);
+  mvprintw(0,0,"'");
+  //Print typed characters in Green
+  attron(COLOR_PAIR(1));
+  printw("%s", typed);
+  attroff(COLOR_PAIR(1));
+
+  //Print the rest of the paragraph in white
+  printw("%s'\n", paragraph);
 }
 
 int random_num(){
@@ -58,42 +74,52 @@ char* random_paragraph(){
 }
 
 int main(){
-  printf("3\n");
-  //======VARIABLE==DECLARATION======
+  //variable declaration
   int fd;
   FILE *f;
-  char* paragraph;
-  char typed[PAR_LEN * 2] = "";
-  char c;
-  //time_t start = time(NULL);
-  //=================================
+  char * cur;
+  char paragraph[PAR_LEN];
+  char typed[PAR_LEN] = "";
+  int c;
+  int yMax, xMax;
+  time_t start = time(NULL);
 
-/*  f = fopen("paragraph.txt", "r");
-  if (f == NULL){
-    printf("Error: %s\n", strerror(errno));
-    return 1;
-  } */
-  //fgets(paragraph, PAR_LEN, f);
+  //Ncurses initialization
+  initscr();
+  cbreak();
+  noecho();
+  nonl();
+  intrflush(stdscr,FALSE);
+
+  //Get paragraph
   paragraph = random_paragraph();
   strcat(paragraph, "\0");
-  //printf("%c", paragraph[strlen(paragraph) - 1]);
-  //printf("\033[2J");
-  printf("'%s'\n", paragraph);
-  fflush(stdout);
-  while(paragraph && strcmp(paragraph, "")){
-    c = getchar();
-    getchar(); //"absorbs" '\n' from pressing ENTER
-    if (c != '\r' && c != EOF && c != '\t'){
-      strcpy(paragraph, char_check(paragraph, typed, c));
-      printf("\033[2J");
-      printf("Typed: '%s' | length of typed: %ld\n\n\n", typed, strlen(typed));
-      printf("'%s' | length of paragraph: %ld\n", paragraph, strlen(paragraph));
-    }
-    // fgets(c, 10, stdin);
-    // c[strlen(c) - 1] = '\0';
-    // printf("You typed: %s\n", c);
+  //printw("%s\n",paragraph);
+
+  //Get screen size
+  getmaxyx(stdscr, yMax, xMax);
+
+  /*
+  //Create new window for input
+  WINDOW * inputwin = newwin(3,xMax-20,yMax-5,5);
+  //box(inputwin, 0,0); //Draw a box around the input box
+  refresh();
+  wrefresh(inputwin);
+  keypad(inputwin, TRUE);
+  */
+
+  //Typing paragraph
+  while (strcmp(paragraph, "\0")!= 0){
+    print_paragraph(paragraph, typed);
+    //printw("%s\n",paragraph);
+    c = getch();
+    c = (char) c;
+    strcpy(paragraph, char_check(paragraph, typed, c));
   }
-  printf("Race over!\n");
-  // fclose(f);
+  print_paragraph(paragraph, typed);
+  printw("Race Over\n");
+  //Terminate program
+  getch(); //pauses screen so it doesnt exit immediately. Press any key to exit
+  endwin();
   return 0;
 }
