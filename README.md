@@ -27,6 +27,18 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
      - Updated parameters for char_check accordingly
  - Steve:
    - Worked on functions to select a random paragraph from the file paragraphs.txt
+   
+# Fri, 1/10/2020
+ - Vivian:
+  - Learning about ncurses and tried to start implementing
+  
+# Sat, 1/11/2020
+  - Vivian:
+    - Continued trying to implement ncurses
+    
+# Sun, 1/12/2020
+  - Vivian:
+    - 
 
  
 ### User Interface
