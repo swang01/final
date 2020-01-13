@@ -31,6 +31,8 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
 #### Fri, 1/10/2020
   - Vivian:
     - Learning about ncurses and tried to start implementing
+  - Steve:
+    - Continued working on function to select a random paragraph from paragraphs.txt
   
 #### Sat, 1/11/2020
   - Vivian:
@@ -39,6 +41,8 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
 #### Sun, 1/12/2020
   - Vivian:
     - Finished implementing typing. The program should end after completely typing the paragraph.
+  - Steve:
+    - Tried something else for random_paragraph(), works better but still doesn't work.
 
  
 ### User Interface
