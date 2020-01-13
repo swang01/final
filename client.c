@@ -35,8 +35,8 @@ int random_num(){
 
 char* random_paragraph(){
   //=======VARIABLE==DECLARATION=======
-  char line[PAR_LEN];
-  char paragraph[PAR_LEN];
+  char *line = malloc(sizeof(char) * PAR_LEN);
+  char *paragraph = malloc(sizeof(char) * PAR_LEN);
   int i = 0;
   FILE *f;
   //===================================
@@ -75,9 +75,8 @@ int main(){
   } */
   //fgets(paragraph, PAR_LEN, f);
   paragraph = random_paragraph();
-  printf("2\n");
-  paragraph[strlen(paragraph) - 1] = '\0';
-  printf("1\n");
+  strcat(paragraph, "\0");
+  //printf("%c", paragraph[strlen(paragraph) - 1]);
   //printf("\033[2J");
   printf("'%s'\n", paragraph);
   fflush(stdout);
@@ -86,7 +85,7 @@ int main(){
     getchar(); //"absorbs" '\n' from pressing ENTER
     if (c != '\r' && c != EOF && c != '\t'){
       strcpy(paragraph, char_check(paragraph, typed, c));
-      //printf("\033[2J");
+      printf("\033[2J");
       printf("Typed: '%s' | length of typed: %ld\n\n\n", typed, strlen(typed));
       printf("'%s' | length of paragraph: %ld\n", paragraph, strlen(paragraph));
     }
