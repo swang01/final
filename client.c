@@ -75,6 +75,6 @@ int main(){
   }
   printw("Race Over\n");
   //Terminate program
-  //getch(); //pauses screen so it doesnt exit immediately. Press any key to exit
+  getch(); //pauses screen so it doesnt exit immediately. Press any key to exit
   endwin();
 }
