@@ -33,29 +33,41 @@ int random_num(){
   return num;
 }
 
-void random_paragraph(){
-  char **paragraphs;
-  char *line;
+char* random_paragraph(){
+  int fd;
+  FILE *f;
+  char paragraph_array[31];
+  char paragraph[PAR_LEN];
   int i = 0;
-  int fd = open(FILENAME, O_RDONLY);
-  if (errno){
+  int random = random_num();
+  f = fopen("paragraph.txt", "r");
+  if (f < 0){
     printf("errno %d error: %s\n", errno, strerror(errno));
   }
-  while(fgets(line, 10000, fd)){
-    fgets(line,10000,fd);
-    paragraphs[i] = line;
+  while ((i < random) && (fgets(paragraph, PAR_LEN, f) != NULL)){
+    fgets(paragraph, PAR_LEN, f);
     i++;
+    puts(paragraph);
   }
-  printf("Paragraph: %s", paragraphs[random()]);
+  printf("hello");
+  //fgets(paragraph, PAR_LEN, f);
+/*  while(fgets(paragraph, sizeof(paragraph), f) != NULL){
+    printf("%d\n", i);
+    fgets(paragraph,PAR_LEN,f);
+    paragraph_array[i] = paragraph;
+    printf("Paragraph: %s", paragraph_array[i]);
+    i++;
+  } */
+  fclose(f);
+  return(paragraph);
 }
 
 int main(){
   //======VARIABLE==DECLARATION======
   int fd;
   FILE *f;
-  char paragraph[PAR_LEN];
+  char* paragraph;
   char typed[PAR_LEN * 2] = "";
-  // char c[10];
   char c;
   time_t start = time(NULL);
   //=================================
@@ -64,11 +76,11 @@ int main(){
   if (f == NULL){
     printf("Error: %s\n", strerror(errno));
     return 1;
-  }
-  fgets(paragraph, PAR_LEN, f); */
-  random_paragraph();
+  } */
+  //fgets(paragraph, PAR_LEN, f);
+  paragraph = random_paragraph();
   paragraph[strlen(paragraph) - 1] = '\0';
-  printf("\033[2J");
+  //printf("\033[2J");
   printf("'%s'\n", paragraph);
   fflush(stdout);
   while(paragraph && strcmp(paragraph, "")){
@@ -76,7 +88,7 @@ int main(){
     getchar(); //"absorbs" '\n' from pressing ENTER
     if (c != '\r' && c != EOF && c != '\t'){
       strcpy(paragraph, char_check(paragraph, typed, c));
-      printf("\033[2J");
+      //printf("\033[2J");
       printf("Typed: '%s' | length of typed: %ld\n\n\n", typed, strlen(typed));
       printf("'%s' | length of paragraph: %ld\n", paragraph, strlen(paragraph));
     }
