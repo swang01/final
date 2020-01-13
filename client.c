@@ -21,7 +21,7 @@ char * char_check(char * paragraph, char * typed, char c){
   // printf("paragraph[0]: %c | c[0]: %c\n", paragraph[0], c[0]);
   if (c == paragraph[0]){ //correctly typed
     paragraph++; //update the part to still type
-    //printw("%s\n", paragraph);
+    printw(" %s\n", paragraph);
     strcat(typed, &c); //update the typed part
     // printf("updated paragraph: %s\n", paragraph);
   }
@@ -68,13 +68,13 @@ int main(){
   */
   
   //Typing paragraph
-  while (paragraph){
+  while (strcmp(paragraph, "\0")!= 0){
     //printw("%s\n",paragraph);
     c = getch();
-    char_check(paragraph, typed, c);
+    strcpy(paragraph, char_check(paragraph, typed, c));
   }
-  
+  printw("Race Over\n");
   //Terminate program
-  getch(); //pauses screen so it doesnt exit immediately. Press any key to exit
+  //getch(); //pauses screen so it doesnt exit immediately. Press any key to exit
   endwin();
 }
