@@ -33,10 +33,10 @@ void print_paragraph(char * paragraph, char * typed){
   start_color();
   init_pair(1, COLOR_GREEN, COLOR_BLACK);
   init_pair(2, COLOR_RED, COLOR_BLACK);
-
+  mvprintw(0,0,"'");
   //Print typed characters in Green
   attron(COLOR_PAIR(1));
-  mvprintw(0,0,"'%s", typed);
+  printw("%s", typed);
   attroff(COLOR_PAIR(1));
 
   //Print the rest of the paragraph in white
@@ -115,6 +115,7 @@ int main(){
     c = (char) c;
     strcpy(paragraph, char_check(paragraph, typed, c));
   }
+  print_paragraph(paragraph, typed);
   printw("Race Over\n");
   //Terminate program
   getch(); //pauses screen so it doesnt exit immediately. Press any key to exit
