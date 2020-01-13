@@ -22,6 +22,7 @@ char * char_check(char * paragraph, char * typed, char c){
   if (c == paragraph[0]){ //correctly typed
     paragraph++; //update the part to still type
     strcat(typed, &c); //update the typed part
+    typed[strlen(typed) - 1] = '\0'; //get rid of the extra char at end
     // printf("updated paragraph: %s\n", paragraph);
   }
   return paragraph;
@@ -32,7 +33,7 @@ int main(int argc, char **argv){
   int fd;
   FILE *f;
   char paragraph[PAR_LEN];
-  char typed[PAR_LEN * 2] = "";
+  char typed[PAR_LEN] = "";
   // char c[10];
   char c;
 
@@ -73,7 +74,8 @@ int main(int argc, char **argv){
       printf("> '%s' \n", paragraph);
       // printf("Typed: '%s' | length of typed: %d\n\n\n", typed, strlen(typed));
       // printf("'%s' | length of paragraph: %d\n", paragraph, strlen(paragraph));
-      //select() modifies read_fds
+    /*
+    //select() modifies read_fds
     //we must reset it at each iteration
     FD_ZERO(&read_fds);
     FD_SET(STDIN_FILENO, &read_fds); //add stdin to fd set
@@ -101,6 +103,8 @@ int main(int argc, char **argv){
       //flush the buffer to immediately print
       fflush(stdout);
     }//end socket select
+    */
+    }
   }
   printf("Race over!\n");
   fclose(f);
