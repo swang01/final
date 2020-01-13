@@ -21,6 +21,7 @@ char * char_check(char * paragraph, char * typed, char c){
   // printf("paragraph[0]: %c | c[0]: %c\n", paragraph[0], c[0]);
   if (c == paragraph[0]){ //correctly typed
     paragraph++; //update the part to still type
+    //printw(" %s\n", paragraph);
     strcat(typed, &c); //update the typed part
     typed[strlen(typed) - 1] = '\0'; //get rid of the extra char at end
     // printf("updated paragraph: %s\n", paragraph);
@@ -28,27 +29,63 @@ char * char_check(char * paragraph, char * typed, char c){
   return paragraph;
 }
 
+void print_paragraph(char * paragraph, char * typed){
+  start_color();
+  init_pair(1, COLOR_GREEN, COLOR_BLACK);
+  init_pair(2, COLOR_RED, COLOR_BLACK);
+  mvprintw(0,0,"'");
+  //Print typed characters in Green
+  attron(COLOR_PAIR(1));
+  printw("%s", typed);
+  attroff(COLOR_PAIR(1));
 
-int main(int argc, char **argv){
+  //Print the rest of the paragraph in white
+  printw("%s'\n", paragraph);
+}
+
+int random_num(){
+  srand(time(NULL));
+  int num = rand() % 31;
+  return num;
+}
+
+void random_paragraph(){
+  char **paragraphs;
+  char *line;
+  int i = 0;
+  FILE *f;
+  f = fopen("paragraph.txt", "r");
+  if (f == NULL){
+    printf("Error: %s\n", strerror(errno));
+    return;
+  }
+  while(fgets(line, 10000, f)){
+    fgets(line,10000,f);
+    paragraphs[i] = line;
+    i++;
+  }
+  printf("Paragraph: %s", paragraphs[random()]);
+}
+
+int main(){
+  //variable declaration
   int fd;
   FILE *f;
+  char * cur;
   char paragraph[PAR_LEN];
   char typed[PAR_LEN] = "";
-  // char c[10];
-  char c;
+  int c;
+  int yMax, xMax;
+  time_t start = time(NULL);
 
-  int server_socket;
-  char buffer[BUFFER_SIZE];
+  //Ncurses initialization
+  initscr();
+  cbreak();
+  noecho();
+  nonl();
+  intrflush(stdscr,FALSE);
 
-  //set of file descriptors to read from
-  fd_set read_fds;
-
-  if (argc == 2)
-    server_socket = client_setup( argv[1]);
-  else
-    server_socket = client_setup( TEST_IP );
-  // ---------------------------------------------------------------------------
-  // getting paragraph content from text file
+  //Get paragraph
   f = fopen("paragraph.txt", "r");
   if (f == NULL){
     printf("Error: %s\n", strerror(errno));
@@ -56,56 +93,32 @@ int main(int argc, char **argv){
   }
   fgets(paragraph, PAR_LEN, f);
   paragraph[strlen(paragraph) - 1] = '\0';
-  printf("\033[2J");
-  printf("'%s'\n", paragraph);
-  fflush(stdout);
-  // flush buffer to immediately print
-  //----------------------------------------------------------------------------
+  //printw("%s\n",paragraph);
 
-  //getting user input (still need to utilize curses instead of basic stdin)
-  while(paragraph && strcmp(paragraph, "")){
-    c = getchar();
-    getchar(); //"absorbs" '\n' from pressing ENTER
-    if (c != '\r' && c != EOF && c != '\t'){
-      strcpy(paragraph, char_check(paragraph, typed, c));
-      printf("\033[2J");
-      printf("TYPE!!!!\n\n\n\n");
-      printf("Typed: '%s'\n\n", typed);
-      printf("> '%s' \n", paragraph);
-      // printf("Typed: '%s' | length of typed: %d\n\n\n", typed, strlen(typed));
-      // printf("'%s' | length of paragraph: %d\n", paragraph, strlen(paragraph));
-    /*
-    //select() modifies read_fds
-    //we must reset it at each iteration
-    FD_ZERO(&read_fds);
-    FD_SET(STDIN_FILENO, &read_fds); //add stdin to fd set
-    FD_SET(server_socket, &read_fds); //add socket to fd set
+  //Get screen size
+  getmaxyx(stdscr, yMax, xMax);
 
-    //select will block until either fd is ready
-    select(server_socket + 1, &read_fds, NULL, NULL, NULL);
+  /*
+  //Create new window for input
+  WINDOW * inputwin = newwin(3,xMax-20,yMax-5,5);
+  //box(inputwin, 0,0); //Draw a box around the input box
+  refresh();
+  wrefresh(inputwin);
+  keypad(inputwin, TRUE);
+  */
 
-    if (FD_ISSET(STDIN_FILENO, &read_fds)) {
-      fgets(buffer, sizeof(buffer), stdin);
-      *strchr(buffer, '\n') = 0;
-      write(server_socket, buffer, sizeof(buffer));
-      read(server_socket, buffer, sizeof(buffer));
-      printf("received: [%s]\n", buffer);
-    }//end stdin select
-
-    //currently the server is not set up to
-    //send messages to all the clients, but
-    //this would allow for broadcast messages
-    if (FD_ISSET(server_socket, &read_fds)) {
-      read(server_socket, buffer, sizeof(buffer));
-      printf("[SERVER BROADCAST] [%s]\n", buffer);
-      printf("enter data: ");
-      //the above printf does not have \n
-      //flush the buffer to immediately print
-      fflush(stdout);
-    }//end socket select
-    */
-    }
+  //Typing paragraph
+  while (strcmp(paragraph, "\0")!= 0){
+    print_paragraph(paragraph, typed);
+    //printw("%s\n",paragraph);
+    c = getch();
+    c = (char) c;
+    strcpy(paragraph, char_check(paragraph, typed, c));
   }
-  printf("Race over!\n");
-  fclose(f);
+  print_paragraph(paragraph, typed);
+  printw("Race Over\n");
+  //Terminate program
+  getch(); //pauses screen so it doesnt exit immediately. Press any key to exit
+  endwin();
+  return 0;
 }
