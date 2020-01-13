@@ -10,7 +10,7 @@
 #include <signal.h>
 #include <ncurses.h>
 
-#define PAR_LEN 10
+#define PAR_LEN 100
 #define FILENAME "paragraph.txt"
 
 int random_num();
