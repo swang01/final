@@ -42,7 +42,7 @@ void print_paragraph(char * paragraph, char * typed){
   //Print the rest of the paragraph in white
   printw("%s\n", paragraph);
 }
- 
+
 int random_num(){
   srand(time(NULL));
   int num = rand() % 31;
@@ -53,12 +53,14 @@ void random_paragraph(){
   char **paragraphs;
   char *line;
   int i = 0;
-  int fd = open(FILENAME, O_RDONLY);
-  if (errno){
-    printf("errno %d error: %s\n", errno, strerror(errno));
+  FILE *f;
+  f = fopen("paragraph.txt", "r");
+  if (f == NULL){
+    printf("Error: %s\n", strerror(errno));
+    return 1;
   }
-  while(fgets(line, 10000, fd)){
-    fgets(line,10000,fd);
+  while(fgets(line, 10000, f)){
+    fgets(line,10000,f);
     paragraphs[i] = line;
     i++;
   }
@@ -75,14 +77,14 @@ int main(){
   int c;
   int yMax, xMax;
   time_t start = time(NULL);
- 
+
   //Ncurses initialization
   initscr();
   cbreak();
   noecho();
   nonl();
   intrflush(stdscr,FALSE);
-  
+
   //Get paragraph
   f = fopen("paragraph.txt", "r");
   if (f == NULL){
@@ -104,7 +106,7 @@ int main(){
   wrefresh(inputwin);
   keypad(inputwin, TRUE);
   */
-  
+
   //Typing paragraph
   while (strcmp(paragraph, "\0")!= 0){
     print_paragraph(paragraph, typed);
