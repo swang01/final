@@ -31,18 +31,31 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
 #### Fri, 1/10/2020
   - Vivian:
     - Learning about ncurses and tried to start implementing
+  - Rachel:
+    - Reviewing pipes and networking code
   - Steve:
     - Continued working on function to select a random paragraph from paragraphs.txt
   
 #### Sat, 1/11/2020
   - Vivian:
     - Continued trying to implement ncurses
+  - Rachel:
+    - Continued to get a better idea about pipes and networking
     
 #### Sun, 1/12/2020
   - Vivian:
     - Finished implementing typing. The program should end after completely typing the paragraph.
+  - Rachel:
+    - Helped Vivian and Steve debug parts of their functions
   - Steve:
     - Tried something else for random_paragraph(), works better but still doesn't work.
+
+#### Mon, 1/13/2020
+   - Rachel:
+    - Helped Steve fix random_paragraph()
+    - More review of pipes
+    - Added .gitignore for C to repo
+    - "typed" variable no long is twice the size it should be (fixed!)
 
  
 ### User Interface
