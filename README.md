@@ -51,7 +51,7 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
     - Tried something else for random_paragraph(), works better but still doesn't work.
 
 #### Mon, 1/13/2020
-   - Rachel:
+  - Rachel:
     - Helped Steve fix random_paragraph()
     - More review of pipes
     - Added .gitignore for C to repo
