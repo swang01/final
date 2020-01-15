@@ -56,6 +56,10 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
     - More review of pipes
     - Added .gitignore for C to repo
     - "typed" variable no long is twice the size it should be (fixed!)
+    
+#### Tues, 1/14/2020
+  - Vivian:
+    - Tried to calculate statistics, however having a hard time with wpm because it's much more complicated than we originally thought :'(
 
  
 ### User Interface
@@ -105,6 +109,6 @@ Tuesday 1/6: Typing processes, including calculating statistics, should be finis
 
 Friday 1/10: Work with the shared file (source file of passage) should be about done. If work on networking hasn’t started, start.
 
-Monday 1/13: Multiple computers should be able to race simultaneously. Work out kinks in shared memory to make sure racing can occur in real time.
+Monday 1/13: Multiple computers should be able to race simultaneously. Work out kinks to make sure racing can occur in real time.
 
 Wednesday 1/15: Project should be done, last-minute debugging and adding addition features if possible

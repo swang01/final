@@ -40,22 +40,28 @@ int random_num(){
   return num;
 }
 
-void random_paragraph(){
-  char **paragraphs;
-  char *line;
+char* random_paragraph(){
+  //=======VARIABLE==DECLARATION=======
+  char *line = malloc(sizeof(char) * PAR_LEN);
+  char *paragraph = malloc(sizeof(char) * PAR_LEN);
   int i = 0;
   FILE *f;
+  //===================================
   f = fopen("paragraph.txt", "r");
-  if (f == NULL){
-    printf("Error: %s\n", strerror(errno));
-    return;
+  int rand = random_num();
+  printf("random number: %d\n", rand);
+  if (errno){
+    printf("errno %d error: %s\n", errno, strerror(errno));
   }
-  while(fgets(line, 10000, f)){
-    fgets(line,10000,f);
-    paragraphs[i] = line;
+  while (fgets(line, PAR_LEN , f) != NULL){
+    if (i == rand){
+      strcpy(paragraph,line);
+      puts(paragraph);
+    }
     i++;
   }
-  printf("Paragraph: %s", paragraphs[random()]);
+  fclose(f);
+  return paragraph;
 }
 
 float get_wpm(float time){
@@ -76,7 +82,7 @@ int main(){
   int fd;
   FILE *f;
   char * cur;
-  char paragraph[PAR_LEN];
+  char *paragraph;
   char typed[PAR_LEN] = "";
   int c;
   int yMax, xMax;
@@ -93,14 +99,10 @@ int main(){
   intrflush(stdscr,FALSE);
 
   //Get paragraph
-  f = fopen("paragraph.txt", "r");
-  if (f == NULL){
-    printf("Error: %s\n", strerror(errno));
-    return 1;
-  }
-  fgets(paragraph, PAR_LEN, f);
-  paragraph[strlen(paragraph) - 1] = '\0';
-  
+  paragraph = random_paragraph();
+  strcat(paragraph, "\0");
+  //printw("%s\n",paragraph);
+
   //Get screen size
   getmaxyx(stdscr, yMax, xMax);
 
