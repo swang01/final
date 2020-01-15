@@ -60,6 +60,7 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
 #### Tues, 1/14/2020
   - Vivian:
     - Tried to calculate statistics, however having a hard time with wpm because it's much more complicated than we originally thought :'(
+    - The paragraphs had a lot of blankspaces after them that were not spaces and I tried getting rid of them because the race can't end without typing those blankspaces but I did not succeed
 
  
 ### User Interface
