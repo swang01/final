@@ -49,7 +49,7 @@ char* random_paragraph(){
   //===================================
   f = fopen("paragraph.txt", "r");
   int rand = random_num();
-  printf("random number: %d\n", rand);
+  //printf("random number: %d\n", rand);
   if (errno){
     printf("errno %d error: %s\n", errno, strerror(errno));
   }
@@ -61,7 +61,24 @@ char* random_paragraph(){
     i++;
   }
   fclose(f);
+  paragraph = strip(paragraph);
   return paragraph;
+}
+
+char * strip(char * paragraph){
+  char * start = paragraph;
+  while ( * start == ' '){
+    start ++;
+  }
+  char * end = paragraph;
+  while (*end){
+    end ++;
+  }
+  while (*end == ' ' || *end == '\n'){
+    * end = 0;
+    end --;
+  }
+  return start;
 }
 
 float get_wpm(float time){
