@@ -13,6 +13,21 @@ int main() {
   int subserver_count = 0;
   char buffer[BUFFER_SIZE];
 
+  //pipes stuff for transferring info b/c server and subserver
+  int pipeSS0[2];
+  int pipeSS1[2];
+  int pipeSS2[2];
+  int pipeSS3[2];
+
+  pipe(pipeSS0);
+  pipe(pipeSS1);
+  pipe(pipeSS2);
+  pipe(pipeSS3);
+  //4 pipes for 4 subservers
+
+  //or maybe itd be easier to read from a fifo
+  mkfifo("wpm", 0644);
+
   //set of file descriptors to read from
   fd_set read_fds;
 
@@ -32,9 +47,10 @@ int main() {
     //if listen_socket triggered select
     if (FD_ISSET(listen_socket, &read_fds)) {
      client_socket = server_connect(listen_socket);
+     //returns socket descriptor for new socket connected
 
      f = fork();
-     if (f == 0)
+     if (f == 0) //child
        subserver(client_socket);
      else {
        subserver_count++;
