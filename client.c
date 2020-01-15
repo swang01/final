@@ -1,11 +1,5 @@
 #include "headers.h"
 
-// #include <sys/wait.h>
-// #include <sys/ipc.h>
-// #include <sys/shm.h>
-// #include <sys/types.h>
-// #include <conio.h> //to get unbuffered input (and also doesn't work T-T)
-
 /*
   char_check(char * paragraph, char c)
   paragraph: a pointer to the current position in the paragraph being typed
@@ -17,14 +11,10 @@
           otherwise returns the unchanged paragraph
 */
 char * char_check(char * paragraph, char * typed, char c){
-  // printf("paragraph: %s \n c: %s\n", paragraph, c);
-  // printf("paragraph[0]: %c | c[0]: %c\n", paragraph[0], c[0]);
   if (c == paragraph[0]){ //correctly typed
     paragraph++; //update the part to still type
-    //printw(" %s\n", paragraph);
     strcat(typed, &c); //update the typed part
     typed[strlen(typed) - 1] = '\0';
-    // printf("updated paragraph: %s\n", paragraph);
   }
   return paragraph;
 }
@@ -34,6 +24,7 @@ void print_paragraph(char * paragraph, char * typed){
   init_pair(1, COLOR_GREEN, COLOR_BLACK);
   init_pair(2, COLOR_RED, COLOR_BLACK);
   mvprintw(0,0,"'");
+  
   //Print typed characters in Green
   attron(COLOR_PAIR(1));
   printw("%s", typed);
@@ -67,6 +58,19 @@ void random_paragraph(){
   printf("Paragraph: %s", paragraphs[random()]);
 }
 
+float get_wpm(float time){
+  float seconds = time/1000;
+  float wpm = 0; //final wpm
+  float cpm = 60/seconds;
+  wpm = cpm/5;
+  
+  //int words = typed/5;
+  mvprintw(10,0,"seconds: %d cpm: %d wpm: %d\n", seconds,cpm, wpm);
+  //float minutes = time / 60;
+  //wpm = words/minutes;
+  return wpm;
+}
+
 int main(){
   //variable declaration
   int fd;
@@ -76,8 +80,11 @@ int main(){
   char typed[PAR_LEN] = "";
   int c;
   int yMax, xMax;
-  time_t start = time(NULL);
-
+  struct timeb start;
+  struct timeb last;
+  struct timeb new;
+  start.millitm = -1;
+  
   //Ncurses initialization
   initscr();
   cbreak();
@@ -93,30 +100,28 @@ int main(){
   }
   fgets(paragraph, PAR_LEN, f);
   paragraph[strlen(paragraph) - 1] = '\0';
-  //printw("%s\n",paragraph);
-
+  
   //Get screen size
   getmaxyx(stdscr, yMax, xMax);
 
-  /*
-  //Create new window for input
-  WINDOW * inputwin = newwin(3,xMax-20,yMax-5,5);
-  //box(inputwin, 0,0); //Draw a box around the input box
-  refresh();
-  wrefresh(inputwin);
-  keypad(inputwin, TRUE);
-  */
-
   //Typing paragraph
   while (strcmp(paragraph, "\0")!= 0){
+    if (start.millitm == -1){
+      ftime(&start);
+      ftime(&last);
+    }
     print_paragraph(paragraph, typed);
+    ftime(&new);
+    mvprintw(yMax-1, 1, "%ld wpm\n", get_wpm(new.millitm - last.millitm));
     //printw("%s\n",paragraph);
     c = getch();
     c = (char) c;
     strcpy(paragraph, char_check(paragraph, typed, c));
+    last.millitm = new.millitm;
   }
   print_paragraph(paragraph, typed);
   printw("Race Over\n");
+  
   //Terminate program
   getch(); //pauses screen so it doesnt exit immediately. Press any key to exit
   endwin();
