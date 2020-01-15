@@ -75,6 +75,12 @@ char * strip(char * paragraph){
     end ++;
   }
   while (*end == ' ' || *end == '\n'){
+    if (*end == '\n'){
+      printf("enter\n");
+    }
+    if (*end == ' '){
+      printf("space\n");
+    }
     * end = 0;
     end --;
   }
@@ -125,6 +131,7 @@ int main(){
 
   //Typing paragraph
   while (strcmp(paragraph, "\0")!= 0){
+    mvprintw(15,0,"%s\n", paragraph);
     if (start.millitm == -1){
       ftime(&start);
       ftime(&last);
@@ -136,6 +143,7 @@ int main(){
     c = getch();
     c = (char) c;
     strcpy(paragraph, char_check(paragraph, typed, c));
+    clear(); //clear the screen
     last.millitm = new.millitm;
   }
   print_paragraph(paragraph, typed);
