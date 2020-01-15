@@ -56,6 +56,10 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
     - More review of pipes
     - Added .gitignore for C to repo
     - "typed" variable no long is twice the size it should be (fixed!)
+    
+#### Tues, 1/14/2020
+  - Vivian:
+    - Tried to calculate statistics, however having a hard time with wpm because it's much more complicated than we originally thought :'(
 
  
 ### User Interface
