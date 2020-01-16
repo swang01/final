@@ -12,21 +12,19 @@ int main() {
   int f;
   int subserver_count = 0;
   char buffer[BUFFER_SIZE];
+  char statsbuffer[BUFFER_SIZE]; //storing stats
 
-  //pipes stuff for transferring info b/c server and subserver
-  int pipeSS0[2];
-  int pipeSS1[2];
-  int pipeSS2[2];
-  int pipeSS3[2];
+  //unnamed pipes for transferring info b/c server and subserver
+  int ss0[2];
+  int ss1[2];
+  int ss2[2];
+  int ss3[2];
 
-  pipe(pipeSS0);
-  pipe(pipeSS1);
-  pipe(pipeSS2);
-  pipe(pipeSS3);
-  //4 pipes for 4 subservers
-
-  //or maybe itd be easier to read from a fifo
-  mkfifo("wpm", 0644);
+  int pipes[4][2] = {ss0, ss1, ss2, ss3}; 
+  pipe(ss0);
+  pipe(ss1);
+  pipe(ss2);
+  pipe(ss3);
 
   //set of file descriptors to read from
   fd_set read_fds;
@@ -54,7 +52,11 @@ int main() {
        subserver(client_socket);
      else {
        subserver_count++;
+       int statsfd = open("stats", O_RDONLY);
+       read(statsfd, statsbuffer, sizeof(statsbuffer));
+       printf("Server received: %s\n", statsbuffer);
        close(client_socket);
+       close(statsfd);
      }
     }//end listen_socket select
 
@@ -84,7 +86,7 @@ void subserver(int client_socket) {
   exit(0);
 }
 
-void process(char * s) {
+void process(char * s) { //to be replaced with stat calculations
   while (*s) {
     if (*s >= 'a' && *s <= 'z')
       *s = ((*s - 'a') + 13) % 26 + 'a';
@@ -92,4 +94,9 @@ void process(char * s) {
       *s = ((*s - 'a') + 13) % 26 + 'a';
     s++;
   }
+  char buffer[BUFFER_SIZE];
+  strncpy(buffer, "sample stats here: wpm ?? | accuracy ??", sizeof(buffer));
+  int statsfd = open("stats", O_WRONLY); //write the data into the FIFO
+  write(statsfd, buffer, sizeof(buffer));
+  close(statsfd);
 }
