@@ -6,7 +6,7 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
 
 ### Required Libraries
   The ncurses library is needed in order for the game to be run.
-    -In order to install ncurses, do sudo apt-get install libncurses5-dev libncursesw5-dev
+    - In order to install ncurses, do sudo apt-get install libncurses5-dev libncursesw5-dev
     
 ### How to Play
 
