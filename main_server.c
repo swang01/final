@@ -3,7 +3,7 @@
 #include "networking.h"
 
 void process(char *s);
-void subserver(int from_client);
+void subserver(int from_client, int writefd);
 
 int main() {
 
@@ -15,16 +15,16 @@ int main() {
   char statsbuffer[BUFFER_SIZE]; //storing stats
 
   //unnamed pipes for transferring info b/c server and subserver
-  int ss0[2];
   int ss1[2];
   int ss2[2];
   int ss3[2];
+  int ss4[2];
 
-  int pipes[4][2] = {ss0, ss1, ss2, ss3}; 
-  pipe(ss0);
+  int pipes[4][2] = {ss1, ss2, ss3, ss4};
   pipe(ss1);
   pipe(ss2);
   pipe(ss3);
+  pipe(ss4);
 
   //set of file descriptors to read from
   fd_set read_fds;
@@ -49,14 +49,18 @@ int main() {
 
      f = fork();
      if (f == 0) //child
-       subserver(client_socket);
+      close(pipes[subserver_count][0]); //close the read end of the corresponding pipe
+       subserver(client_socket, pipes[subserver_count][1]);
+       //also have to pass the pipe write fd
+     }
      else {
        subserver_count++;
-       int statsfd = open("stats", O_RDONLY);
+       close(pipes[subserver_count - 1][1]);
+       //close the write end of the corresponding pipe
+
        read(statsfd, statsbuffer, sizeof(statsbuffer));
        printf("Server received: %s\n", statsbuffer);
        close(client_socket);
-       close(statsfd);
      }
     }//end listen_socket select
 
@@ -69,18 +73,18 @@ int main() {
   }
 }
 
-void subserver(int client_socket) {
+void subserver(int client_socket, int writefd) {
   char buffer[BUFFER_SIZE];
 
   //for testing client select statement
   strncpy(buffer, "hello client", sizeof(buffer));
-  write(client_socket, buffer, sizeof(buffer));
+  write(writefd, buffer, sizeof(buffer));
 
   while (read(client_socket, buffer, sizeof(buffer))) {
 
     printf("[subserver %d] received: [%s]\n", getpid(), buffer);
     process(buffer);
-    write(client_socket, buffer, sizeof(buffer));
+    write(writefd, buffer, sizeof(buffer));
   }//end read loop
   close(client_socket);
   exit(0);
@@ -94,9 +98,4 @@ void process(char * s) { //to be replaced with stat calculations
       *s = ((*s - 'a') + 13) % 26 + 'a';
     s++;
   }
-  char buffer[BUFFER_SIZE];
-  strncpy(buffer, "sample stats here: wpm ?? | accuracy ??", sizeof(buffer));
-  int statsfd = open("stats", O_WRONLY); //write the data into the FIFO
-  write(statsfd, buffer, sizeof(buffer));
-  close(statsfd);
 }
