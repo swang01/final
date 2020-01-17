@@ -20,7 +20,7 @@ int main() {
   int ss3[2];
   int ss4[2];
 
-  int pipes[4][2] = {ss1, ss2, ss3, ss4};
+  int *pipes[4] = {ss1, ss2, ss3, ss4};
   pipe(ss1);
   pipe(ss2);
   pipe(ss3);
@@ -48,7 +48,7 @@ int main() {
      //returns socket descriptor for new socket connected
 
      f = fork();
-     if (f == 0) //child
+     if (f == 0){ //child
       close(pipes[subserver_count][0]); //close the read end of the corresponding pipe
        subserver(client_socket, pipes[subserver_count][1]);
        //also have to pass the pipe write fd
@@ -58,7 +58,7 @@ int main() {
        close(pipes[subserver_count - 1][1]);
        //close the write end of the corresponding pipe
 
-       read(statsfd, statsbuffer, sizeof(statsbuffer));
+       read(pipes[subserver_count - 1][0], statsbuffer, sizeof(statsbuffer));
        printf("Server received: %s\n", statsbuffer);
        close(client_socket);
      }
