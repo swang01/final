@@ -117,7 +117,7 @@ int main(int argc, char **argv) {
 
   }//end loop
 
-  
+
   //variable declaration
   int fd;
   FILE *f;
