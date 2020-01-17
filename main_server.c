@@ -20,7 +20,7 @@ int main() {
   int ss3[2];
   int ss4[2];
 
-  int *pipes[4] = {ss1, ss2, ss3, ss4};
+  int * pipes[4] = {ss1, ss2, ss3, ss4};
   pipe(ss1);
   pipe(ss2);
   pipe(ss3);
