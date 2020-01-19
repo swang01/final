@@ -127,7 +127,7 @@ int main(){
     }
     print_paragraph(paragraph, typed);
     wpm = get_wpm(time(NULL)-start, strlen(typed));
-    mvprintw(yMax-1, 1, "%ld wpm\n", wpm);
+    // mvprintw(yMax-1, 1, "%ld wpm\n", wpm);
     //printw("%s\n",paragraph);
     c = (char) getch();
     // char_check(paragraph, typed, c);
