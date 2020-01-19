@@ -1,13 +1,8 @@
 #include "headers.h"
 #include "networking.h"
 
-// #include <sys/wait.h>
-// #include <sys/ipc.h>
-// #include <sys/shm.h>
-// #include <sys/types.h>
-// #include <conio.h> //to get unbuffered input (and also doesn't work T-T)
-
-/* char_check(char * paragraph, char c)
+/*
+  char_check(char * paragraph, char c)
   paragraph: a pointer to the current position in the paragraph being typed
   typed: a pointer for the letters typed already
   c: a char to check against
@@ -17,11 +12,8 @@
           otherwise returns the unchanged paragraph
 */
 char * char_check(char * paragraph, char * typed, char c){
-  // printf("paragraph: %s \n c: %s\n", paragraph, c);
-  // printf("paragraph[0]: %c | c[0]: %c\n", paragraph[0], c[0]);
   if (c == paragraph[0]){ //correctly typed
     paragraph++; //update the part to still type
-    //printw(" %s\n", paragraph);
     strcat(typed, &c); //update the typed part
     typed[strlen(typed) - 1] = '\0'; //get rid of the extra char at end
     // printf("updated paragraph: %s\n", paragraph);
@@ -34,6 +26,7 @@ void print_paragraph(char * paragraph, char * typed){
   init_pair(1, COLOR_GREEN, COLOR_BLACK);
   init_pair(2, COLOR_RED, COLOR_BLACK);
   mvprintw(0,0,"'");
+
   //Print typed characters in Green
   attron(COLOR_PAIR(1));
   printw("%s", typed);
@@ -49,22 +42,64 @@ int random_num(){
   return num;
 }
 
-void random_paragraph(){
-  char **paragraphs;
-  char *line;
+char* random_paragraph(){
+  //=======VARIABLE==DECLARATION=======
+  char *line = malloc(sizeof(char) * PAR_LEN);
+  char *paragraph = malloc(sizeof(char) * PAR_LEN);
   int i = 0;
   FILE *f;
+  //===================================
   f = fopen("paragraph.txt", "r");
-  if (f == NULL){
-    printf("Error: %s\n", strerror(errno));
-    return;
+  int rand = random_num();
+  //printf("random number: %d\n", rand);
+  if (errno){
+    printf("errno %d error: %s\n", errno, strerror(errno));
   }
-  while(fgets(line, 10000, f)){
-    fgets(line,10000,f);
-    paragraphs[i] = line;
+  while (fgets(line, PAR_LEN , f) != NULL){
+    if (i == rand){
+      strcpy(paragraph,line);
+      puts(paragraph);
+    }
     i++;
   }
-  printf("Paragraph: %s", paragraphs[random()]);
+  fclose(f);
+  paragraph[strlen(paragraph)-1] = '\0';
+  return paragraph;
+}
+
+char * strip(char * paragraph){
+  char * start = paragraph;
+  while ( * start == ' '){
+    start ++;
+  }
+  char * end = paragraph;
+  while (*end){
+    end ++;
+  }
+  while (*end == ' ' || *end == '\n'){
+    if (*end == '\n'){
+      printf("enter\n");
+    }
+    if (*end == ' '){
+      printf("space\n");
+    }
+    * end = 0;
+    end --;
+  }
+  return start;
+}
+
+float get_wpm(float time){
+  float seconds = time/1000;
+  float wpm = 0; //final wpm
+  float cpm = 60/seconds;
+  wpm = cpm/5;
+
+  //int words = typed/5;
+  mvprintw(10,0,"seconds: %d cpm: %d wpm: %d\n", seconds,cpm, wpm);
+  //float minutes = time / 60;
+  //wpm = words/minutes;
+  return wpm;
 }
 
 int main(int argc, char **argv) {
@@ -122,11 +157,14 @@ int main(int argc, char **argv) {
   int fd;
   FILE *f;
   char * cur;
-  char paragraph[PAR_LEN];
+  char *paragraph;
   char typed[PAR_LEN] = "";
   int c;
   int yMax, xMax;
-  time_t start = time(NULL);
+  struct timeb start;
+  struct timeb last;
+  struct timeb new;
+  start.millitm = -1;
 
   //Ncurses initialization
   initscr();
@@ -136,40 +174,35 @@ int main(int argc, char **argv) {
   intrflush(stdscr,FALSE);
 
   //Get paragraph
-  f = fopen("paragraph.txt", "r");
-  if (f == NULL){
-    printf("Error: %s\n", strerror(errno));
-    return 1;
-  }
-  fgets(paragraph, PAR_LEN, f);
-  paragraph[strlen(paragraph) - 1] = '\0';
+  paragraph = random_paragraph();
+  strcat(paragraph, "\0");
   //printw("%s\n",paragraph);
 
   //Get screen size
   getmaxyx(stdscr, yMax, xMax);
 
-  /*
-  //Create new window for input
-  WINDOW * inputwin = newwin(3,xMax-20,yMax-5,5);
-  //box(inputwin, 0,0); //Draw a box around the input box
-  refresh();
-  wrefresh(inputwin);
-  keypad(inputwin, TRUE);
-  */
-
   //Typing paragraph
   while (strcmp(paragraph, "\0")!= 0){
+    mvprintw(15,0,"%s\n", paragraph);
+    if (start.millitm == -1){
+      ftime(&start);
+      ftime(&last);
+    }
     print_paragraph(paragraph, typed);
+    ftime(&new);
+    mvprintw(yMax-1, 1, "%ld wpm\n", get_wpm(new.millitm - last.millitm));
     //printw("%s\n",paragraph);
     c = getch();
     c = (char) c;
     strcpy(paragraph, char_check(paragraph, typed, c));
+    wrefresh(stdscr); //clear the screen
+    last.millitm = new.millitm;
+
   }
   print_paragraph(paragraph, typed);
   printw("Race Over\n");
-  //Terminate program
-  getch(); //pauses screen so it doesnt exit immediately. Press any key to exit
-  printf("Testing connecting to server...\n");
+  getch();
   endwin();
+
   return 0;
 }

@@ -9,11 +9,14 @@
 #include <dirent.h>
 #include <signal.h>
 #include <ncurses.h>
+#include <sys/timeb.h>
 
-#define PAR_LEN 100
+#define PAR_LEN 800
 #define FILENAME "paragraph.txt"
 
 int random_num();
-void random_paragraph();
+char* random_paragraph();
 void print_paragraph(char * paragraph, char * typed);
 char * char_check(char * paragraph, char * typed, char c);
+float get_wpm(float time);
+char * strip(char * paragraph);
