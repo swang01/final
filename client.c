@@ -66,36 +66,36 @@ char* random_paragraph(){
   return paragraph;
 }
 
-float get_wpm(int time, int typed){
-  //float seconds = time/1000;
-  //float wpm = 0; //final wpm
-  //float cpm = 60/seconds;
-  //wpm = cpm/5;
-  int seconds = time;
-  int cpm = typed;
-  int wpm = 0;
-  if (seconds != 0 && seconds < 60){
-    int intervals = (int) 60/time;
-    cpm = typed * intervals;
-    wpm= (int)cpm/5;
-  }
-  else if (seconds != 0){
-    cpm = (int)typed/time;
-    cpm = cpm * 60;
-    wpm = cpm/5;
-  }
-  // while (*end == ' ' || *end == '\n'){
-  //   if (*end == '\n'){
-  //     printf("enter\n");
-  //   }
-  //   if (*end == ' '){
-  //     printf("space\n");
-  //   }
-  //   * end = 0;
-  //   end --;
-  // }
-  // return start;
-}
+// float get_wpm(int time, int typed){
+//   //float seconds = time/1000;
+//   //float wpm = 0; //final wpm
+//   //float cpm = 60/seconds;
+//   //wpm = cpm/5;
+//   int seconds = time;
+//   int cpm = typed;
+//   int wpm = 0;
+//   if (seconds != 0 && seconds < 60){
+//     int intervals = (int) 60/time;
+//     cpm = typed * intervals;
+//     wpm= (int)cpm/5;
+//   }
+//   else if (seconds != 0){
+//     cpm = (int)typed/time;
+//     cpm = cpm * 60;
+//     wpm = cpm/5;
+//   }
+//   // while (*end == ' ' || *end == '\n'){
+//   //   if (*end == '\n'){
+//   //     printf("enter\n");
+//   //   }
+//   //   if (*end == ' '){
+//   //     printf("space\n");
+//   //   }
+//   //   * end = 0;
+//   //   end --;
+//   // }
+//   // return start;
+// }
 
 float get_wpm(float time){
   float seconds = time/1000;
