@@ -158,7 +158,7 @@ int main(){
   //   last.millitm = new.millitm;
   //
   // }
-  // print_paragraph(paragraph, typed);
+  print_paragraph(paragraph, typed);
   // printw("Race Over\n");
   getch();
   endwin();
