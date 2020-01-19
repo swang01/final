@@ -143,8 +143,9 @@ int main(){
     c = getch();
     c = (char) c;
     strcpy(paragraph, char_check(paragraph, typed, c));
-    clear(); //clear the screen
+    wrefresh(stdscr); //clear the screen
     last.millitm = new.millitm;
+
   }
   print_paragraph(paragraph, typed);
   printw("Race Over\n");
