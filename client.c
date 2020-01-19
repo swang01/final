@@ -128,8 +128,8 @@ int main(){
     mvprintw(yMax-1, 1, "%ld wpm\n", wpm);
     //printw("%s\n",paragraph);
     c = (char) getch();
-    char_check(paragraph, typed, c);
-    // strcpy(paragraph, char_check(paragraph, typed, c));
+    // char_check(paragraph, typed, c);
+    strcpy(paragraph, char_check(paragraph, typed, c));
     wrefresh(stdscr); //clear the screen
 
   }
