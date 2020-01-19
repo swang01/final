@@ -144,6 +144,7 @@ int main(){
     }
     accuracy = correct / num_keys;
     mvprintw(11, 1, "Accuracy: %0.2f%\n", accuracy*100);
+    mvprintw(12, 1, "Boosts: %d\n", nitro);
     wrefresh(stdscr); //clear the screen
     
   }
