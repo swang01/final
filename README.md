@@ -74,3 +74,8 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
   - Steve:
     - Renamed original README.md to PROPOSAL.md
     - Created and updated README.md
+    
+#### Sat, 1/18/2010
+  - Vivian:
+    - Fixed the issue with the blackspace
+    - Bug: After typing a few characters,the string starts to shift and I don't know what's causing it IUADJNKFXV
