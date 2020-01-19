@@ -24,7 +24,7 @@ void print_paragraph(char * paragraph, char * typed){
   init_pair(1, COLOR_GREEN, COLOR_BLACK);
   init_pair(2, COLOR_RED, COLOR_BLACK);
   mvprintw(0,0,"'");
-  
+
   //Print typed characters in Green
   attron(COLOR_PAIR(1));
   printw("%s", typed);
@@ -92,7 +92,7 @@ float get_wpm(float time){
   float wpm = 0; //final wpm
   float cpm = 60/seconds;
   wpm = cpm/5;
-  
+
   //int words = typed/5;
   mvprintw(10,0,"seconds: %d cpm: %d wpm: %d\n", seconds,cpm, wpm);
   //float minutes = time / 60;
@@ -105,7 +105,7 @@ int main(){
   printf("'%s'\n", str);
   str = strip(str);
   printf("'%s'\n", str);
-  
+
   //variable declaration
   int fd;
   FILE *f;
@@ -118,7 +118,7 @@ int main(){
   struct timeb last;
   struct timeb new;
   start.millitm = -1;
-  
+
   //Ncurses initialization
   initscr();
   cbreak();
@@ -133,7 +133,7 @@ int main(){
 
   //Get screen size
   getmaxyx(stdscr, yMax, xMax);
-  
+
   //Typing paragraph
   while (strcmp(paragraph, "\0")!= 0){
     mvprintw(15,0,"%s\n", paragraph);
@@ -158,4 +158,5 @@ int main(){
   endwin();
 
   return 0;
+  
 }

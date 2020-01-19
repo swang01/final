@@ -14,3 +14,4 @@ clean:
 
 run:
 	./client.out
+	
