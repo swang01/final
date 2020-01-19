@@ -120,7 +120,7 @@ int main(){
 
   //Typing paragraph
   while (strcmp(paragraph, "\0")!= 0){
-    mvprintw(15,0,"%s\n", paragraph); //prints paragraph lower
+    // mvprintw(15,0,"%s\n", paragraph); //prints paragraph lower
     if (start == -1){
       start= time(NULL);
     }
@@ -129,7 +129,7 @@ int main(){
     mvprintw(yMax-1, 1, "%ld wpm\n", wpm);
     c = (char) getch();
     paragraph = char_check(paragraph, typed, c);
-    mvprintw(25, 0, "paragraph: %s\n", paragraph);
+    // mvprintw(25, 0, "paragraph: %s\n", paragraph);
     wrefresh(stdscr); //clear the screen
 
   }
