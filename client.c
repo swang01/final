@@ -65,11 +65,27 @@ char* random_paragraph(){
   return paragraph;
 }
 
-float get_wpm(float time){
-  float seconds = time/1000;
-  float wpm = 0; //final wpm
-  float cpm = 60/seconds;
-  wpm = cpm/5;
+float get_wpm(int time, int typed){
+  //float seconds = time/1000;
+  //float wpm = 0; //final wpm
+  //float cpm = 60/seconds;
+  //wpm = cpm/5;
+  int seconds = time;
+  int cpm = typed;
+  int wpm = 0;
+  if (seconds != 0 && seconds < 60){
+    int intervals = (int) 60/time;
+    cpm = typed * intervals;
+    wpm= (int)cpm/5;
+  }
+  else if (seconds != 0){
+    cpm = (int)typed/time;
+    cpm = cpm * 60;
+    wpm = cpm/5;
+  }
+  
+  
+  
   
   //int words = typed/5;
   mvprintw(10,0,"seconds: %d cpm: %d wpm: %d\n", seconds,cpm, wpm);
@@ -88,10 +104,11 @@ int main(){
   int c;
   int yMax, xMax;
   int nitro = 1;
-  struct timeb start;
-  struct timeb last;
-  struct timeb new;
-  start.millitm = -1;
+  //struct timeb start;
+  //struct timeb last;
+  //struct timeb new;
+  //start.millitm = -1;
+  int start = -1;
   
   //Ncurses initialization
   initscr();
@@ -111,19 +128,22 @@ int main(){
   //Typing paragraph
   while (strcmp(paragraph, "\0")!= 0){
     mvprintw(15,0,"%s\n", paragraph);
-    if (start.millitm == -1){
-      ftime(&start);
-      ftime(&last);
+    //if (start.millitm == -1){
+    //  ftime(&start);
+    //  ftime(&last);
+    //}
+    if (start == -1){
+      start = time(NULL);
     }
     print_paragraph(paragraph, typed);
-    ftime(&new);
-    mvprintw(yMax-1, 1, "%ld wpm\n", get_wpm(new.millitm - last.millitm));
+    //ftime(&new);
+    mvprintw(yMax-1, 1, "%ld wpm\n", get_wpm(time(NULL)-start,strlen(typed)));
     //printw("%s\n",paragraph);
     c = getch();
     c = (char) c;
     strcpy(paragraph, char_check(paragraph, typed, c));
     wrefresh(stdscr); //clear the screen
-    last.millitm = new.millitm;
+	     //last.millitm = new.millitm;
 
   }
   print_paragraph(paragraph, typed);
