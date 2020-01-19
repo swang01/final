@@ -141,25 +141,25 @@ int main(){
   //Get screen size
   getmaxyx(stdscr, yMax, xMax);
 
-  // //Typing paragraph
-  // while (strcmp(paragraph, "\0")!= 0){
-  //   mvprintw(15,0,"%s\n", paragraph);
-  //   if (start.millitm == -1){
-  //     ftime(&start);
-  //     ftime(&last);
-  //   }
-  //   print_paragraph(paragraph, typed);
-  //   ftime(&new);
-  //   mvprintw(yMax-1, 1, "%ld wpm\n", get_wpm(new.millitm - last.millitm));
-  //   //printw("%s\n",paragraph);
-  //   c = (char) getch();
-  //   strcpy(paragraph, char_check(paragraph, typed, c));
-  //   wrefresh(stdscr); //clear the screen
-  //   last.millitm = new.millitm;
-  //
-  // }
+  //Typing paragraph
+  while (strcmp(paragraph, "\0")!= 0){
+    mvprintw(15,0,"%s\n", paragraph);
+    if (start.millitm == -1){
+      ftime(&start);
+      ftime(&last);
+    }
+    print_paragraph(paragraph, typed);
+    ftime(&new);
+    mvprintw(yMax-1, 1, "%ld wpm\n", get_wpm(new.millitm - last.millitm));
+    //printw("%s\n",paragraph);
+    c = (char) getch();
+    strcpy(paragraph, char_check(paragraph, typed, c));
+    wrefresh(stdscr); //clear the screen
+    last.millitm = new.millitm;
+
+  }
   print_paragraph(paragraph, typed);
-  // printw("Race Over\n");
+  printw("Race Over\n");
   getch();
   endwin();
 
