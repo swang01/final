@@ -22,6 +22,10 @@ char * char_check(char * paragraph, char * typed, char c){
   return paragraph;
 }
 
+
+
+
+
 /*
   print_paragraph(char * paragraph, char * typed)
   paragraph: a pointer to the current position in the paragraph being typed
@@ -44,6 +48,11 @@ void print_paragraph(char * paragraph, char * typed){
   printw("%s'\n", paragraph);
 }
 
+
+
+
+
+
 /*
   random_num()
   Returns a random number from 0-30
@@ -53,6 +62,11 @@ int random_num(){
   int num = rand() % 31;
   return num;
 }
+
+
+
+
+
 
 /*
   random_paragraph()
@@ -84,6 +98,11 @@ char* random_paragraph(){
   return paragraph;
 }
 
+
+
+
+
+
 /*
   get_wpm(int time, int typed)
   time: the number of seconds since the player started typing the paragraph
@@ -108,6 +127,11 @@ float get_wpm(int time, int typed){
   return wpm;
 }
 
+
+
+
+
+
 /*
   print_stats(int wpm, int boosts, int acc)
   wpm: the player's wpm
@@ -122,6 +146,11 @@ void print_stats(int wpm, int boosts, int acc){
   mvprintw(12, 1, "Boosts: %d\n", nitro);
 }
 
+
+
+
+
+
 int main(){
   //variable declaration
   int fd;
@@ -133,10 +162,10 @@ int main(){
   int c;
   int yMax, xMax;
   int wpm= 0
-  int nitro = 1;
-  int start = -1;
-  float num_keys = 0;
-  float errors = 0;
+  int nitro = 1; //number of boosts left
+  int start = -1; // start time of race
+  float num_keys = 0; //number of keys press
+  float errors = 0; //number of errors made
   float accuracy = 1;
 
   //Ncurses initialization
@@ -153,32 +182,35 @@ int main(){
   getmaxyx(stdscr, yMax, xMax);
 
   //Typing paragraph
-  while (strcmp(paragraph, "\0")!= 0){
-    if (start == -1){
+  while (strcmp(paragraph, "\0")!= 0){ //while there is still text left in the paragraph
+    if (start == -1){ //If the race has not yet started, start the timer
       start= time(NULL);
     }
+
     print_paragraph(paragraph, typed);
     print_stats(wpm, nitro, accuracy);
+
     wpm = get_wpm(time(NULL)-start, strlen(typed));
-    c = (char) getch();
-    if (c == '\r' && nitro == 1){
-      while (paragraph[0] != ' '){
-	      paragraph = char_check(paragraph,typed,paragraph[0]);
+
+    c = (char) getch(); //get keyboard input
+    if (c == '\r' && nitro == 1){ //if player pressed enter and still has a boost
+      while (paragraph[0] != ' '){ //until there is a space
+	      paragraph = char_check(paragraph,typed,paragraph[0]); //move up
       }
-      paragraph = char_check(paragraph,typed,paragraph[0]);
-      nitro = 0;
+      paragraph = char_check(paragraph,typed,paragraph[0]); //move past the space
+      nitro = 0; //use the boost
     }
-    else if (c != '\r'){
-      num_keys += 1;
-      update = char_check(paragraph,typed, c);
-      if (strcmp(paragraph, update) == 0) {
-	       errors += 1;
+    else if (c != '\r'){ //if player pressed other keys
+      num_keys += 1; //add to total number of keys
+      update = char_check(paragraph,typed, c); //"new" paragraph
+      if (strcmp(paragraph, update) == 0) { //if the "new" is the same as the original
+	       errors += 1;// add 1 to the number of errors made
       }
       else {
-	       paragraph = update;
+	       paragraph = update; //else update the paragraph
       }
     }
-    accuracy = (num_keys-errors) / num_keys;
+    accuracy = (num_keys-errors) / num_keys; //calculate accuracy
     wrefresh(stdscr); //clear the screen
 
   }
