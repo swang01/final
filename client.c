@@ -82,8 +82,6 @@ float get_wpm(int time, int typed){
     cpm = cpm * 60;
     wpm = cpm/5;
   }
-
-  mvprintw(10,0,"seconds: %d cpm: %d wpm: %d\n", seconds,cpm, wpm);
   return wpm;
 }
 
@@ -93,17 +91,15 @@ int main(){
   FILE *f;
   char * cur;
   char *paragraph;
-  char *newparagraph;
+  char *update;
   char typed[PAR_LEN] = "";
   int c;
   int yMax, xMax;
   int wpm;
   int nitro = 1;
-  //struct timeb start;
-  //struct timeb last;
-  //struct timeb new;
-  //start.millitm = -1;
   int start = -1;
+  float num_keys, errors,correct,  accuracy;
+ 
 
   //Ncurses initialization
   initscr();
@@ -120,18 +116,36 @@ int main(){
 
   //Typing paragraph
   while (strcmp(paragraph, "\0")!= 0){
-    // mvprintw(15,0,"%s\n", paragraph); //prints paragraph lower
     if (start == -1){
       start= time(NULL);
     }
     print_paragraph(paragraph, typed);
     wpm = get_wpm(time(NULL)-start, strlen(typed));
-    mvprintw(yMax-1, 1, "%ld wpm\n", wpm);
-    c = (char) getch();
-    paragraph = char_check(paragraph, typed, c);
-    // mvprintw(25, 0, "paragraph: %s\n", paragraph);
-    wrefresh(stdscr); //clear the screen
 
+    mvprintw(10, 1, "%ld wpm\n", wpm);
+    c = (char) getch();
+    if (c == '\r' && nitro == 1){
+      while (paragraph[0] != ' '){
+	      paragraph = char_check(paragraph,typed,paragraph[0]);
+      }
+      paragraph = char_check(paragraph,typed,paragraph[0]);
+      nitro = 0;
+    }
+    else if (c != '\r'){
+      num_keys += 1;
+      update = char_check(paragraph,typed, c);
+      if (strcmp(paragraph, update) == 0) {
+	errors += 1;
+      }
+      else {
+	paragraph = update;
+	correct += 1;
+      }
+    }
+    accuracy = correct / num_keys;
+    mvprintw(11, 1, "Accuracy: %0.2f%\n", accuracy*100);
+    wrefresh(stdscr); //clear the screen
+    
   }
   print_paragraph(paragraph, typed);
   printw("Race Over\n");
