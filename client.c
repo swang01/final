@@ -131,9 +131,9 @@ int main(){
     // mvprintw(yMax-1, 1, "%ld wpm\n", wpm);
     //printw("%s\n",paragraph);
     c = (char) getch();
-    newparagraph = char_check(paragraph, typed, c);
-    mvprintw(20, 0, "newparagraph: %s\n", newparagraph);
-    strcpy(paragraph, newparagraph);
+    paragraph = char_check(paragraph, typed, c);
+    // mvprintw(20, 0, "newparagraph: %s\n", newparagraph);
+    // strcpy(paragraph, newparagraph);
     mvprintw(25, 0, "paragraph: %s\n", paragraph);
     // strncpy(paragraph, newparagraph, strlen(newparagraph));
     // paragraph[strlen(paragraph) - 1] = '\0';
