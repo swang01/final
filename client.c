@@ -58,7 +58,7 @@ char* random_paragraph(){
   while (fgets(line, PAR_LEN , f) != NULL){
     if (i == rand){
       strcpy(paragraph,line);
-      puts(paragraph);
+      // puts(paragraph);
     }
     i++;
   }
@@ -114,7 +114,7 @@ int main(){
 
   //Get paragraph
   paragraph = random_paragraph();
-  strcat(paragraph, "\0");
+  // strcat(paragraph, "\0");
   //printw("%s\n",paragraph);
 
   //Get screen size
