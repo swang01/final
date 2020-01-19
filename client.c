@@ -127,14 +127,25 @@ int main(){
     mvprintw(10, 1, "%ld wpm\n", wpm);
     //printw("%s\n",paragraph);
     c = (char) getch();
-    num_keys += 1;
-    update = char_check(paragraph,typed, c);
-    if (strcmp(paragraph, update) == 0) {
-      errors += 1;
+    if (c == '\r'){
+      //letter[0] = paragraph[0];
+      while (paragraph[0] != ' '){
+
+	strcat(typed,(char *) paragraph[0]);
+	paragraph++;
+      }
+      mvprintw(15,15,"hello");
     }
-    else {
-      paragraph = update;
-      correct += 1;
+    else{
+      num_keys += 1;
+      update = char_check(paragraph,typed, c);
+      if (strcmp(paragraph, update) == 0) {
+	errors += 1;
+      }
+      else {
+	paragraph = update;
+	correct += 1;
+      }
     }
     accuracy = correct / num_keys;
     mvprintw(11, 1, "Accuracy: %0.2f%\n", accuracy*100);
