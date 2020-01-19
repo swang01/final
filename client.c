@@ -1,10 +1,11 @@
 #include "headers.h"
 
 /*
-  char_check(char * paragraph, char c)
+  char_check(char * paragraph, char * typed, char c)
   paragraph: a pointer to the current position in the paragraph being typed
   typed: a pointer for the letters typed already
   c: a char to check against
+  
   if: c matches char at the beginning of the paragraph, paragraph gets incremented by 1 (character was typed correctly)
   else: nothing happens
   returns paragraph shifted over one char if c matched the first char of paragraph
@@ -21,6 +22,13 @@ char * char_check(char * paragraph, char * typed, char c){
   return paragraph;
 }
 
+/*
+  print_paragraph(char * paragraph, char * typed)
+  paragraph: a pointer to the current position in the paragraph being typed
+  typed: a pointer for the letters typed already
+  
+  Prints out the typed text in green and the rest of the paragraph in white.
+*/
 void print_paragraph(char * paragraph, char * typed){
   start_color();
   init_pair(1, COLOR_GREEN, COLOR_BLACK);
@@ -36,12 +44,20 @@ void print_paragraph(char * paragraph, char * typed){
   printw("%s'\n", paragraph);
 }
 
+/*
+  random_num()
+  Returns a random number from 0-30
+*/
 int random_num(){
   srand(time(NULL));
   int num = rand() % 31;
   return num;
 }
 
+/*
+  random_paragraph()
+  Returns a randomly selected paragraph from paragraph.txt
+*/
 char* random_paragraph(){
   //=======VARIABLE==DECLARATION=======
   char *line = malloc(sizeof(char) * PAR_LEN);
@@ -68,6 +84,13 @@ char* random_paragraph(){
   return paragraph;
 }
 
+/*
+  get_wpm(int time, int typed)
+  time: the number of seconds since the player started typing the paragraph
+  typed: the number of correctly typed characters
+  
+  Returns the words per minute statistic by calculating the number of characters typed in a minute divided by 5
+*/
 float get_wpm(int time, int typed){
   int seconds = time;
   int cpm = typed;
