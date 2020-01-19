@@ -78,5 +78,6 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
 #### Sat, 1/18/2010
   - Vivian:
     - Fixed the issue with the blackspace
-    - Bug: After typing a few characters, the string starts to shift and I don't know what's causing it IUADJNKFXV
     - Finally got the wpm calculator to work
+    - Added an accuracy calculator as well
+    - Successfuly implemented nitros

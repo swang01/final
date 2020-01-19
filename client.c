@@ -12,7 +12,9 @@
 */
 char * char_check(char * paragraph, char * typed, char c){
   if (c == paragraph[0]){ //correctly typed
+    // printw("\n\nold paragraph: %s\n", paragraph);
     paragraph++; //update the part to still type
+    // printw("\n\nnew paragraph: %s\n", paragraph);
     strcat(typed, &c); //update the typed part
     typed[strlen(typed) - 1] = '\0';
   }
@@ -56,7 +58,7 @@ char* random_paragraph(){
   while (fgets(line, PAR_LEN , f) != NULL){
     if (i == rand){
       strcpy(paragraph,line);
-      puts(paragraph);
+      // puts(paragraph);
     }
     i++;
   }
@@ -80,8 +82,6 @@ float get_wpm(int time, int typed){
     cpm = cpm * 60;
     wpm = cpm/5;
   }
-  
-  //mvprintw(10,0,"seconds: %d cpm: %d wpm: %d\n", seconds,cpm, wpm);
   return wpm;
 }
 
@@ -110,25 +110,23 @@ int main(){
 
   //Get paragraph
   paragraph = random_paragraph();
-  strcat(paragraph, "\0");
-  //printw("%s\n",paragraph);
 
   //Get screen size
   getmaxyx(stdscr, yMax, xMax);
 
   //Typing paragraph
   while (strcmp(paragraph, "\0")!= 0){
-    //mvprintw(15,0,"%s\n", paragraph);
     if (start == -1){
       start= time(NULL);
     }
     print_paragraph(paragraph, typed);
     wpm = get_wpm(time(NULL)-start, strlen(typed));
+
     mvprintw(10, 1, "%ld wpm\n", wpm);
     c = (char) getch();
     if (c == '\r' && nitro == 1){
       while (paragraph[0] != ' '){
-	paragraph = char_check(paragraph,typed,paragraph[0]);
+	      paragraph = char_check(paragraph,typed,paragraph[0]);
       }
       paragraph = char_check(paragraph,typed,paragraph[0]);
       nitro = 0;
