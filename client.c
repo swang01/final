@@ -31,7 +31,7 @@ void print_paragraph(char * paragraph, char * typed){
   attroff(COLOR_PAIR(1));
 
   //Print the rest of the paragraph in white
-  printw("%s'\n", paragraph);
+  printw("|%s'\n", paragraph);
 }
 
 int random_num(){
@@ -80,7 +80,7 @@ float get_wpm(int time, int typed){
     cpm = cpm * 60;
     wpm = cpm/5;
   }
-  
+
   mvprintw(10,0,"seconds: %d cpm: %d wpm: %d\n", seconds,cpm, wpm);
   return wpm;
 }
@@ -128,7 +128,8 @@ int main(){
     mvprintw(yMax-1, 1, "%ld wpm\n", wpm);
     //printw("%s\n",paragraph);
     c = (char) getch();
-    strcpy(paragraph, char_check(paragraph, typed, c));
+    char_check(paragraph, typed, c);
+    // strcpy(paragraph, char_check(paragraph, typed, c));
     wrefresh(stdscr); //clear the screen
 
   }
