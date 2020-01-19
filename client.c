@@ -84,17 +84,17 @@ float get_wpm(int time, int typed){
     cpm = cpm * 60;
     wpm = cpm/5;
   }
-  while (*end == ' ' || *end == '\n'){
-    if (*end == '\n'){
-      printf("enter\n");
-    }
-    if (*end == ' '){
-      printf("space\n");
-    }
-    * end = 0;
-    end --;
-  }
-  return start;
+  // while (*end == ' ' || *end == '\n'){
+  //   if (*end == '\n'){
+  //     printf("enter\n");
+  //   }
+  //   if (*end == ' '){
+  //     printf("space\n");
+  //   }
+  //   * end = 0;
+  //   end --;
+  // }
+  // return start;
 }
 
 float get_wpm(float time){
