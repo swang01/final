@@ -33,7 +33,7 @@ void print_paragraph(char * paragraph, char * typed){
   attroff(COLOR_PAIR(1));
 
   //Print the rest of the paragraph in white
-  printw("|%s'\n", paragraph);
+  printw("%s'\n", paragraph);
 }
 
 int random_num(){
@@ -134,6 +134,7 @@ int main(){
     newparagraph = char_check(paragraph, typed, c);
     mvprintw(20, 0, "newparagraph: %s\n", newparagraph);
     strcpy(paragraph, newparagraph);
+    mvprintw(25, 0 "paragraph: %s\n", paragraph)
     // strncpy(paragraph, newparagraph, strlen(newparagraph));
     // paragraph[strlen(paragraph) - 1] = '\0';
     wrefresh(stdscr); //clear the screen
