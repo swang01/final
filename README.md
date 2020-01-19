@@ -80,4 +80,4 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
     - Fixed the issue with the blackspace
     - Finally got the wpm calculator to work
     - Added an accuracy calculator as well
-    - Tried implementing nitrotypes but not so successful
+    - Successfuly implemented nitros
