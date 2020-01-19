@@ -62,60 +62,30 @@ char* random_paragraph(){
   }
   fclose(f);
   paragraph[strlen(paragraph)-1] = '\0';
-  printf("%s\n", paragraph);
+  //printf("%s\n", paragraph);
   return paragraph;
 }
 
-// float get_wpm(int time, int typed){
-//   //float seconds = time/1000;
-//   //float wpm = 0; //final wpm
-//   //float cpm = 60/seconds;
-//   //wpm = cpm/5;
-//   int seconds = time;
-//   int cpm = typed;
-//   int wpm = 0;
-//   if (seconds != 0 && seconds < 60){
-//     int intervals = (int) 60/time;
-//     cpm = typed * intervals;
-//     wpm= (int)cpm/5;
-//   }
-//   else if (seconds != 0){
-//     cpm = (int)typed/time;
-//     cpm = cpm * 60;
-//     wpm = cpm/5;
-//   }
-//   // while (*end == ' ' || *end == '\n'){
-//   //   if (*end == '\n'){
-//   //     printf("enter\n");
-//   //   }
-//   //   if (*end == ' '){
-//   //     printf("space\n");
-//   //   }
-//   //   * end = 0;
-//   //   end --;
-//   // }
-//   // return start;
-// }
-
-float get_wpm(float time){
-  float seconds = time/1000;
-  float wpm = 0; //final wpm
-  float cpm = 60/seconds;
-  wpm = cpm/5;
-
-  //int words = typed/5;
+float get_wpm(int time, int typed){
+  int seconds = time;
+  int cpm = typed;
+  int wpm = 0;
+  if (seconds != 0 && seconds < 60){
+    int intervals = (int) 60/time;
+    cpm= typed *intervals;
+    wpm = (int)cpm/5;
+  }
+  else if(seconds != 0){
+    cpm = (int) typed/time;
+    cpm = cpm * 60;
+    wpm = cpm/5;
+  }
+  
   mvprintw(10,0,"seconds: %d cpm: %d wpm: %d\n", seconds,cpm, wpm);
-  //float minutes = time / 60;
-  //wpm = words/minutes;
   return wpm;
 }
 
 int main(){
-  char * str = "hello\n";
-  printf("'%s'\n", str);
-  str = strip(str);
-  printf("'%s'\n", str);
-
   //variable declaration
   int fd;
   FILE *f;
@@ -150,18 +120,16 @@ int main(){
   //Typing paragraph
   while (strcmp(paragraph, "\0")!= 0){
     mvprintw(15,0,"%s\n", paragraph);
-    if (start.millitm == -1){
-      ftime(&start);
-      ftime(&last);
+    if (start == -1){
+      start= time(NULL);
     }
     print_paragraph(paragraph, typed);
-    ftime(&new);
-    mvprintw(yMax-1, 1, "%ld wpm\n", get_wpm(new.millitm - last.millitm));
+    wpm = get_wpm(time(NULL)-start, strlen(typed));
+    mvprintw(yMax-1, 1, "%ld wpm\n", wpm);
     //printw("%s\n",paragraph);
     c = (char) getch();
     strcpy(paragraph, char_check(paragraph, typed, c));
     wrefresh(stdscr); //clear the screen
-    last.millitm = new.millitm;
 
   }
   print_paragraph(paragraph, typed);
