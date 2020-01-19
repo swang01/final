@@ -61,7 +61,7 @@ char* random_paragraph(){
     i++;
   }
   fclose(f);
-  paragraph = strip(paragraph);
+  paragraph[strlen(paragraph)-1] = '\0';
   return paragraph;
 }
 
@@ -101,6 +101,11 @@ float get_wpm(float time){
 }
 
 int main(){
+  char * str = "hello\n";
+  printf("'%s'\n", str);
+  str = strip(str);
+  printf("'%s'\n", str);
+  
   //variable declaration
   int fd;
   FILE *f;
@@ -128,7 +133,7 @@ int main(){
 
   //Get screen size
   getmaxyx(stdscr, yMax, xMax);
-
+  
   //Typing paragraph
   while (strcmp(paragraph, "\0")!= 0){
     mvprintw(15,0,"%s\n", paragraph);
@@ -149,9 +154,8 @@ int main(){
   }
   print_paragraph(paragraph, typed);
   printw("Race Over\n");
-  
-  //Terminate program
-  getch(); //pauses screen so it doesnt exit immediately. Press any key to exit
+  getch();
   endwin();
+
   return 0;
 }
