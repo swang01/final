@@ -125,18 +125,15 @@ int main(){
     print_paragraph(paragraph, typed);
     wpm = get_wpm(time(NULL)-start, strlen(typed));
     mvprintw(10, 1, "%ld wpm\n", wpm);
-    //printw("%s\n",paragraph);
     c = (char) getch();
-    if (c == '\r'){
-      //letter[0] = paragraph[0];
+    if (c == '\r' && nitro == 1){
       while (paragraph[0] != ' '){
-
-	strcat(typed,(char *) paragraph[0]);
-	paragraph++;
+	paragraph = char_check(paragraph,typed,paragraph[0]);
       }
-      mvprintw(15,15,"hello");
+      paragraph = char_check(paragraph,typed,paragraph[0]);
+      nitro = 0;
     }
-    else{
+    else if (c != '\r'){
       num_keys += 1;
       update = char_check(paragraph,typed, c);
       if (strcmp(paragraph, update) == 0) {
