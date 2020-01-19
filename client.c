@@ -12,9 +12,9 @@
 */
 char * char_check(char * paragraph, char * typed, char c){
   if (c == paragraph[0]){ //correctly typed
-    printf("old paragraph: %s\n", paragraph);
+    printf("\nold paragraph: %s\n", paragraph);
     paragraph++; //update the part to still type
-    printf("new paragraph: %s\n", paragraph);
+    printf("\nnew paragraph: %s\n", paragraph);
     strcat(typed, &c); //update the typed part
     typed[strlen(typed) - 1] = '\0';
   }
