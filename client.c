@@ -12,9 +12,9 @@
 */
 char * char_check(char * paragraph, char * typed, char c){
   if (c == paragraph[0]){ //correctly typed
-    printw("\n\nold paragraph: %s\n", paragraph);
+    // printw("\n\nold paragraph: %s\n", paragraph);
     paragraph++; //update the part to still type
-    printw("\n\nnew paragraph: %s\n", paragraph);
+    // printw("\n\nnew paragraph: %s\n", paragraph);
     strcat(typed, &c); //update the typed part
     typed[strlen(typed) - 1] = '\0';
   }
@@ -114,8 +114,6 @@ int main(){
 
   //Get paragraph
   paragraph = random_paragraph();
-  // strcat(paragraph, "\0");
-  //printw("%s\n",paragraph);
 
   //Get screen size
   getmaxyx(stdscr, yMax, xMax);
@@ -128,15 +126,10 @@ int main(){
     }
     print_paragraph(paragraph, typed);
     wpm = get_wpm(time(NULL)-start, strlen(typed));
-    // mvprintw(yMax-1, 1, "%ld wpm\n", wpm);
-    //printw("%s\n",paragraph);
+    mvprintw(yMax-1, 1, "%ld wpm\n", wpm);
     c = (char) getch();
     paragraph = char_check(paragraph, typed, c);
-    // mvprintw(20, 0, "newparagraph: %s\n", newparagraph);
-    // strcpy(paragraph, newparagraph);
     mvprintw(25, 0, "paragraph: %s\n", paragraph);
-    // strncpy(paragraph, newparagraph, strlen(newparagraph));
-    // paragraph[strlen(paragraph) - 1] = '\0';
     wrefresh(stdscr); //clear the screen
 
   }
