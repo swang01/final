@@ -132,7 +132,7 @@ int main(){
     //printw("%s\n",paragraph);
     c = (char) getch();
     newparagraph = char_check(paragraph, typed, c);
-    strcpy(paragraph, newparagraph, strlen(newparagraph));
+    strncpy(paragraph, newparagraph, strlen(newparagraph));
     paragraph[strlen(newparagraph) - 1] = '\0';
     wrefresh(stdscr); //clear the screen
 
