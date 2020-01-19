@@ -134,6 +134,7 @@ int main(){
     newparagraph = char_check(paragraph, typed, c);
     printw("\nnewparagraph: %s\n", newparagraph);
     strcpy(paragraph, newparagraph);
+    printf("\n\nprinted paragraph%s\n", paragraph);
     // strncpy(paragraph, newparagraph, strlen(newparagraph));
     // paragraph[strlen(paragraph) - 1] = '\0';
     wrefresh(stdscr); //clear the screen
