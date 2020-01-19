@@ -66,14 +66,23 @@ char* random_paragraph(){
   return paragraph;
 }
 
-char * strip(char * paragraph){
-  char * start = paragraph;
-  while ( * start == ' '){
-    start ++;
+float get_wpm(int time, int typed){
+  //float seconds = time/1000;
+  //float wpm = 0; //final wpm
+  //float cpm = 60/seconds;
+  //wpm = cpm/5;
+  int seconds = time;
+  int cpm = typed;
+  int wpm = 0;
+  if (seconds != 0 && seconds < 60){
+    int intervals = (int) 60/time;
+    cpm = typed * intervals;
+    wpm= (int)cpm/5;
   }
-  char * end = paragraph;
-  while (*end){
-    end ++;
+  else if (seconds != 0){
+    cpm = (int)typed/time;
+    cpm = cpm * 60;
+    wpm = cpm/5;
   }
   while (*end == ' ' || *end == '\n'){
     if (*end == '\n'){
@@ -102,11 +111,6 @@ float get_wpm(float time){
 }
 
 int main(){
-  char * str = "hello\n";
-  printf("'%s'\n", str);
-  str = strip(str);
-  printf("'%s'\n", str);
-
   //variable declaration
   int fd;
   FILE *f;
@@ -115,10 +119,12 @@ int main(){
   char typed[PAR_LEN] = "";
   int c;
   int yMax, xMax;
-  struct timeb start;
-  struct timeb last;
-  struct timeb new;
-  start.millitm = -1;
+  int nitro = 1;
+  //struct timeb start;
+  //struct timeb last;
+  //struct timeb new;
+  //start.millitm = -1;
+  int start = -1;
 
   //Ncurses initialization
   initscr();
