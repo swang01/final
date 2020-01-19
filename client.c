@@ -121,8 +121,9 @@ int main(){
   int wpm;
   int nitro = 1;
   int start = -1;
-  float num_keys, errors,correct,  accuracy;
- 
+  float num_keys = 0;
+  float errors = 0;
+  float accuracy;
 
   //Ncurses initialization
   initscr();
@@ -162,10 +163,10 @@ int main(){
       }
       else {
 	paragraph = update;
-	correct += 1;
       }
     }
-    accuracy = correct / num_keys;
+    mvprintw(13, 1, "Total: %f Errors: %f\n",num_keys, errors);
+    accuracy = (num_keys-errors) / num_keys;
     mvprintw(11, 1, "Accuracy: %0.2f%\n", accuracy*100);
     mvprintw(12, 1, "Boosts: %d\n", nitro);
     wrefresh(stdscr); //clear the screen
