@@ -103,6 +103,7 @@ int main(){
   char typed[PAR_LEN] = "";
   int c;
   int yMax, xMax;
+  int wpm;
   int nitro = 1;
   //struct timeb start;
   //struct timeb last;
