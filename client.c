@@ -93,6 +93,7 @@ int main(){
   FILE *f;
   char * cur;
   char *paragraph;
+  char *newparagraph;
   char typed[PAR_LEN] = "";
   int c;
   int yMax, xMax;
@@ -130,8 +131,9 @@ int main(){
     // mvprintw(yMax-1, 1, "%ld wpm\n", wpm);
     //printw("%s\n",paragraph);
     c = (char) getch();
-    // char_check(paragraph, typed, c);
-    strcpy(paragraph, char_check(paragraph, typed, c));
+    newparagraph = char_check(paragraph, typed, c);
+    strcpy(paragraph, newparagraph, strlen(newparagraph));
+    paragraph[strlen(newparagraph) - 1] = '\0';
     wrefresh(stdscr); //clear the screen
 
   }
