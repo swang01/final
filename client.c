@@ -5,7 +5,7 @@
   paragraph: a pointer to the current position in the paragraph being typed
   typed: a pointer for the letters typed already
   c: a char to check against
-  
+
   if: c matches char at the beginning of the paragraph, paragraph gets incremented by 1 (character was typed correctly)
   else: nothing happens
   returns paragraph shifted over one char if c matched the first char of paragraph
@@ -26,7 +26,7 @@ char * char_check(char * paragraph, char * typed, char c){
   print_paragraph(char * paragraph, char * typed)
   paragraph: a pointer to the current position in the paragraph being typed
   typed: a pointer for the letters typed already
-  
+
   Prints out the typed text in green and the rest of the paragraph in white.
 */
 void print_paragraph(char * paragraph, char * typed){
@@ -88,7 +88,7 @@ char* random_paragraph(){
   get_wpm(int time, int typed)
   time: the number of seconds since the player started typing the paragraph
   typed: the number of correctly typed characters
-  
+
   Returns the words per minute statistic by calculating the number of characters typed in a minute divided by 5
 */
 float get_wpm(int time, int typed){
@@ -108,6 +108,20 @@ float get_wpm(int time, int typed){
   return wpm;
 }
 
+/*
+  print_stats(int wpm, int boosts, int acc)
+  wpm: the player's wpm
+  boosts: the number of boosts the player has left
+  acc: the accuracy of the player
+
+  Displays the statistics on the user interface
+*/
+void print_stats(int wpm, int boosts, int acc){
+  mvprintw(10, 1, "%ld wpm\n", wpm);
+  mvprintw(11, 1, "Accuracy: %0.2f%\n", accuracy*100);
+  mvprintw(12, 1, "Boosts: %d\n", nitro);
+}
+
 int main(){
   //variable declaration
   int fd;
@@ -118,12 +132,12 @@ int main(){
   char typed[PAR_LEN] = "";
   int c;
   int yMax, xMax;
-  int wpm;
+  int wpm= 0
   int nitro = 1;
   int start = -1;
   float num_keys = 0;
   float errors = 0;
-  float accuracy;
+  float accuracy = 1;
 
   //Ncurses initialization
   initscr();
@@ -144,9 +158,8 @@ int main(){
       start= time(NULL);
     }
     print_paragraph(paragraph, typed);
+    print_stats(wpm, nitro, accuracy);
     wpm = get_wpm(time(NULL)-start, strlen(typed));
-
-    mvprintw(10, 1, "%ld wpm\n", wpm);
     c = (char) getch();
     if (c == '\r' && nitro == 1){
       while (paragraph[0] != ' '){
@@ -159,18 +172,15 @@ int main(){
       num_keys += 1;
       update = char_check(paragraph,typed, c);
       if (strcmp(paragraph, update) == 0) {
-	errors += 1;
+	       errors += 1;
       }
       else {
-	paragraph = update;
+	       paragraph = update;
       }
     }
-    mvprintw(13, 1, "Total: %f Errors: %f\n",num_keys, errors);
     accuracy = (num_keys-errors) / num_keys;
-    mvprintw(11, 1, "Accuracy: %0.2f%\n", accuracy*100);
-    mvprintw(12, 1, "Boosts: %d\n", nitro);
     wrefresh(stdscr); //clear the screen
-    
+
   }
   print_paragraph(paragraph, typed);
   printw("Race Over\n");
