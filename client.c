@@ -122,7 +122,7 @@ int main(){
 
   //Typing paragraph
   while (strcmp(paragraph, "\0")!= 0){
-    mvprintw(15,0,"%s\n", paragraph);
+    mvprintw(15,0,"%s\n", paragraph); //prints paragraph lower
     if (start == -1){
       start= time(NULL);
     }
@@ -132,9 +132,8 @@ int main(){
     //printw("%s\n",paragraph);
     c = (char) getch();
     newparagraph = char_check(paragraph, typed, c);
-    printw("\nnewparagraph: %s\n", newparagraph);
+    mvprintw(20, 0, "newparagraph: %s\n", newparagraph);
     strcpy(paragraph, newparagraph);
-    printf("\n\nprinted paragraph%s\n", paragraph);
     // strncpy(paragraph, newparagraph, strlen(newparagraph));
     // paragraph[strlen(paragraph) - 1] = '\0';
     wrefresh(stdscr); //clear the screen
