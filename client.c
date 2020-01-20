@@ -164,7 +164,7 @@ int main(){
   int wpm= 0
   int nitro = 1; //number of boosts left
   int start = -1; // start time of race
-  float num_keys = 0; //number of keys press
+  float num_keys = 0; //number of keys pressed
   float errors = 0; //number of errors made
   float accuracy = 1;
 
