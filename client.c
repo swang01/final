@@ -140,10 +140,10 @@ float get_wpm(int time, int typed){
 
   Displays the statistics on the user interface
 */
-void print_stats(int wpm, int boosts, int acc){
+void print_stats(int wpm, int boosts, float acc){
   mvprintw(10, 1, "%ld wpm\n", wpm);
-  mvprintw(11, 1, "Accuracy: %0.2f%\n", accuracy*100);
-  mvprintw(12, 1, "Boosts: %d\n", nitro);
+  mvprintw(11, 1, "Accuracy: %0.2f%\n", acc * 100);
+  mvprintw(12, 1, "Boosts: %d\n", boosts);
 }
 
 
@@ -161,10 +161,10 @@ int main(){
   char typed[PAR_LEN] = "";
   int c;
   int yMax, xMax;
-  int wpm= 0
+  int wpm= 0;
   int nitro = 1; //number of boosts left
   int start = -1; // start time of race
-  float num_keys = 0; //number of keys press
+  float num_keys = 0; //number of keys pressed
   float errors = 0; //number of errors made
   float accuracy = 1;
 
