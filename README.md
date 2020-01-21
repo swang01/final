@@ -74,11 +74,20 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
   - Vivian:
     - Tried to calculate statistics, however having a hard time with wpm because it's much more complicated than we originally thought :'(
     - The paragraphs had a lot of blankspaces after them that were not spaces and I tried getting rid of them because the race can't end without typing those blankspaces but I did not succeed
+  - Rachel:
+    - Started trying to integrate pipes into networking code and typing, but was unsuccessful 
+    - Decided it might be a better idea to focus on integrating pipes into networking before adding the typing
     
 #### Thurs, 1/16/2020
   - Steve:
     - Renamed original README.md to PROPOSAL.md
     - Created and updated README.md
+  - Rachel:
+    - Got some help in class and tried to focus on using unnamed pipes to keep track of changes on subservers
+
+#### Fri, 1/17/2020
+  - Rachel: 
+    - Continued trying to figure out networking on my branch
     
 #### Sat, 1/18/2020
   - Vivian:
@@ -86,7 +95,16 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
     - Finally got the wpm calculator to work
     - Added an accuracy calculator as well
     - Successfuly implemented nitros
+  - Rachel:
+    - Worked on fixing the bug where the data was getting messed up somehow while typing
+    - Found out that the bug is actually in strcpy so there's something buggy with the built in function??
+#### Sun, 1/19/2020
+  - Rachel:
+    - Fixed that bug with strcpy by avoiding using it at all and the typing works now
+    - Continued trying to integrate pipes into networking
 #### Mon, 1/20/2020
   - Steve:
     - Started with networking, incorporated it into the client
     - Successfully made the client send words per minute statistic to the server then to the client.
+  - Rachel:
+    - Was somewhat successful getting pipes to work with subservers, but running into issues with reading and the program pausing to get data
