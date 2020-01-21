@@ -24,10 +24,6 @@ char * char_check(char * paragraph, char * typed, char c){
   return paragraph;
 }
 
-
-
-
-
 /*
   print_paragraph(char * paragraph, char * typed)
   paragraph: a pointer to the current position in the paragraph being typed
@@ -50,11 +46,6 @@ void print_paragraph(char * paragraph, char * typed){
   printw("%s'\n", paragraph);
 }
 
-
-
-
-
-
 /*
   random_num()
   Returns a random number from 0-30
@@ -64,11 +55,6 @@ int random_num(){
   int num = rand() % 31;
   return num;
 }
-
-
-
-
-
 
 /*
   random_paragraph()
@@ -100,11 +86,6 @@ char* random_paragraph(){
   return paragraph;
 }
 
-
-
-
-
-
 /*
   get_wpm(int time, int typed)
   time: the number of seconds since the player started typing the paragraph
@@ -129,7 +110,6 @@ float get_wpm(int time, int typed){
   return wpm;
 }
 
-
 /*
   print_stats(int wpm, int boosts, int acc)
   wpm: the player's wpm
@@ -143,11 +123,6 @@ void print_stats(int wpm, int boosts, float acc){
   mvprintw(11, 1, "Accuracy: %0.2f%\n", acc * 100);
   mvprintw(12, 1, "Boosts: %d\n", boosts);
 }
-
-
-
-
-
 
 int main(){
   //variable declaration
