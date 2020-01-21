@@ -223,7 +223,6 @@ int main(int argc, char **argv) {
    write(server_socket, buffer, sizeof(buffer));
    read(server_socket, buffer, sizeof(buffer));
    fflush(stdout);
-   read(server_socket, buffer, sizeof(buffer));
    mvprintw(13,1,"Player 1 WPM: [%s]\n", buffer);
    wrefresh(stdscr); //clear the screen
  }
@@ -276,5 +275,5 @@ int main(int argc, char **argv) {
       fflush(stdout);
     }//end socket select
 
-  }//end loop
+  //end loop
 }
