@@ -19,7 +19,7 @@ A.K.A. distressed dog, distressed hamster, distressed cat
 ### Bugs / Attempted and failed
   - Unsuccessfully tried to implement pipes into networking between the main server and subservers, so it was left out entirely on master branch
   - Unsuccessfully attempted to connect multiple players and race simultaneously: when pulling and running the code from master branch a client can still race by themselves and see their own stats for the current race before exiting via a key press
-  - (Not on master branch but on networking branches) When the client is prompted for input the first time, input is sucessfully transferred to the server but then the client gets stalled afterwards until another client connects to the server, probably because of something to do with the reading 
+  - (Not on master branch but on networking branches): When the client is prompted for input the first time, input is sucessfully transferred to the server but then the client gets stalled afterwards until another client connects to the server, probably because of something to do with the reading 
 ### Devlog
 #### Thurs, 1/2/2020 - Tues, 1/7/2020
  - Proposal got finalized after fixing the initial issues
