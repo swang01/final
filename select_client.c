@@ -199,12 +199,7 @@ int main(int argc, char **argv) {
    print_paragraph(paragraph, typed);
    print_stats(wpm, nitro, accuracy);
 
-   wpm = get_wpm(time(NULL)-start, strlen(typed));
-   sprintf(buffer, "%f", wpm);
    c = (char) getch(); //get keyboard input
-   write(server_socket, buffer, sizeof(buffer));
-   read(server_socket, buffer, sizeof(buffer));
-   fflush(stdout);
    if (c == '\r' && nitro == 1){ //if player pressed enter and still has a boost
      while (paragraph[0] != ' '){ //until there is a space
        paragraph = char_check(paragraph,typed,paragraph[0]); //move up
@@ -223,8 +218,12 @@ int main(int argc, char **argv) {
      }
    }
    accuracy = (num_keys-errors) / num_keys; //calculate accuracy
+   wpm = get_wpm(time(NULL)-start, strlen(typed));
+   sprintf(buffer, "%d", wpm);
+   write(server_socket, buffer, sizeof(buffer));
+   read(server_socket, buffer, sizeof(buffer));
+   fflush(stdout);
    wrefresh(stdscr); //clear the screen
-
  }
  print_paragraph(paragraph, typed);
  printw("Race Over\n");
