@@ -15,11 +15,12 @@ A.K.A. distressed dog, distressed hamster, distressed cat
   - On another terminal, run ./client to start the game
   - Type the paragraph you see on the screen. If a letter turns green, the letter has been typed successfully.
   - Words per minute and accuracy is displayed at the bottom of the screen
+  - When the race is over, simple press any key to exit
 
 ### Bugs / Attempted and failed
   - Unsuccessfully tried to implement pipes into networking between the main server and subservers, so it was left out entirely on master branch
   - Unsuccessfully attempted to connect multiple players and race simultaneously: when pulling and running the code from master branch a client can still race by themselves and see their own stats for the current race before exiting via a key press
-  - (Not on master branch but on networking branches): When the client is prompted for input the first time, input is sucessfully transferred to the server but then the client gets stalled afterwards until another client connects to the server, probably because of something to do with the reading 
+  - (Not on master branch but on networking branches) When the client is prompted for input the first time, input is sucessfully transferred to the server but then the client gets stalled afterwards until another client connects to the server, probably because of something to do with the reading 
 ### Devlog
 #### Thurs, 1/2/2020 - Tues, 1/7/2020
  - Proposal got finalized after fixing the initial issues
@@ -115,3 +116,7 @@ A.K.A. distressed dog, distressed hamster, distressed cat
     - Was somewhat successful getting pipes to work with subservers, but running into issues with reading and the program pausing to get data. This was all work done on a separate repo but I added
     - When data is getting written and read from the pipes, the retrieval and writing of data is only successful when the client first connects to the server and sends in its first input, but afterwards client gets stalled and the pipes in the server/subservers receive weird data from previous clients, a seg fault occurs and crashes the server. Clients are left hanging
     - Unable to get pipes to work because program would pause and information would only be read in pipes after a new client has joined for some reason. Couldn't figure out why after being unable to test code because I kept getting the error that address was already in use.
+  - Vivian:
+    - Tried to deal with data being passed between client and sub-server, but there was an error that didn't allow the game to continue. 
+    - Added in a function where the user types in their username before starting the race
+    - Tried to implement the use of structs into the communication between the sub-servers and the server but pipes weren't working, so was very unsuccessful
