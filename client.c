@@ -1,10 +1,11 @@
 #include "headers.h"
 
 /*
-  char_check(char * paragraph, char c)
+  char_check(char * paragraph, char * typed, char c)
   paragraph: a pointer to the current position in the paragraph being typed
   typed: a pointer for the letters typed already
   c: a char to check against
+
   if: c matches char at the beginning of the paragraph, paragraph gets incremented by 1 (character was typed correctly)
   else: nothing happens
   returns paragraph shifted over one char if c matched the first char of paragraph
@@ -12,19 +13,32 @@
 */
 char * char_check(char * paragraph, char * typed, char c){
   if (c == paragraph[0]){ //correctly typed
+    // printw("\n\nold paragraph: %s\n", paragraph);
     paragraph++; //update the part to still type
+    // printw("\n\nnew paragraph: %s\n", paragraph);
     strcat(typed, &c); //update the typed part
     typed[strlen(typed) - 1] = '\0';
   }
   return paragraph;
 }
 
+
+
+
+
+/*
+  print_paragraph(char * paragraph, char * typed)
+  paragraph: a pointer to the current position in the paragraph being typed
+  typed: a pointer for the letters typed already
+
+  Prints out the typed text in green and the rest of the paragraph in white.
+*/
 void print_paragraph(char * paragraph, char * typed){
   start_color();
   init_pair(1, COLOR_GREEN, COLOR_BLACK);
   init_pair(2, COLOR_RED, COLOR_BLACK);
   mvprintw(0,0,"'");
-  
+
   //Print typed characters in Green
   attron(COLOR_PAIR(1));
   printw("%s", typed);
@@ -34,12 +48,30 @@ void print_paragraph(char * paragraph, char * typed){
   printw("%s'\n", paragraph);
 }
 
+
+
+
+
+
+/*
+  random_num()
+  Returns a random number from 0-30
+*/
 int random_num(){
   srand(time(NULL));
   int num = rand() % 31;
   return num;
 }
 
+
+
+
+
+
+/*
+  random_paragraph()
+  Returns a randomly selected paragraph from paragraph.txt
+*/
 char* random_paragraph(){
   //=======VARIABLE==DECLARATION=======
   char *line = malloc(sizeof(char) * PAR_LEN);
@@ -56,49 +88,68 @@ char* random_paragraph(){
   while (fgets(line, PAR_LEN , f) != NULL){
     if (i == rand){
       strcpy(paragraph,line);
-      puts(paragraph);
+      // puts(paragraph);
     }
     i++;
   }
   fclose(f);
-  paragraph = strip(paragraph);
+  paragraph[strlen(paragraph)-1] = '\0';
+  //printf("%s\n", paragraph);
   return paragraph;
 }
 
-char * strip(char * paragraph){
-  char * start = paragraph;
-  while ( * start == ' '){
-    start ++;
-  }
-  char * end = paragraph;
-  while (*end){
-    end ++;
-  }
-  while (*end == ' ' || *end == '\n'){
-    if (*end == '\n'){
-      printf("enter\n");
-    }
-    if (*end == ' '){
-      printf("space\n");
-    }
-    * end = 0;
-    end --;
-  }
-  return start;
-}
 
-float get_wpm(float time){
-  float seconds = time/1000;
-  float wpm = 0; //final wpm
-  float cpm = 60/seconds;
-  wpm = cpm/5;
-  
-  //int words = typed/5;
-  mvprintw(10,0,"seconds: %d cpm: %d wpm: %d\n", seconds,cpm, wpm);
-  //float minutes = time / 60;
-  //wpm = words/minutes;
+
+
+
+
+/*
+  get_wpm(int time, int typed)
+  time: the number of seconds since the player started typing the paragraph
+  typed: the number of correctly typed characters
+
+  Returns the words per minute statistic by calculating the number of characters typed in a minute divided by 5
+*/
+float get_wpm(int time, int typed){
+  int seconds = time;
+  int cpm = typed;
+  int wpm = 0;
+  if (seconds != 0 && seconds < 60){
+    int intervals = (int) 60/time;
+    cpm= typed *intervals;
+    wpm = (int)cpm/5;
+  }
+  else if(seconds != 0){
+    cpm = (int) typed/time;
+    cpm = cpm * 60;
+    wpm = cpm/5;
+  }
   return wpm;
 }
+
+
+
+
+
+
+/*
+  print_stats(int wpm, int boosts, int acc)
+  wpm: the player's wpm
+  boosts: the number of boosts the player has left
+  acc: the accuracy of the player
+
+  Displays the statistics on the user interface
+*/
+void print_stats(int wpm, int boosts, float acc){
+  mvprintw(10, 1, "%ld wpm\n", wpm);
+  mvprintw(11, 1, "Accuracy: %0.2f%\n", acc * 100);
+  mvprintw(12, 1, "Boosts: %d\n", boosts);
+}
+
+
+
+
+
 
 int main(){
   //variable declaration
@@ -106,14 +157,17 @@ int main(){
   FILE *f;
   char * cur;
   char *paragraph;
+  char *update;
   char typed[PAR_LEN] = "";
   int c;
   int yMax, xMax;
-  struct timeb start;
-  struct timeb last;
-  struct timeb new;
-  start.millitm = -1;
-  
+  int wpm= 0;
+  int nitro = 1; //number of boosts left
+  int start = -1; // start time of race
+  float num_keys = 0; //number of keys pressed
+  float errors = 0; //number of errors made
+  float accuracy = 1;
+
   //Ncurses initialization
   initscr();
   cbreak();
@@ -123,34 +177,48 @@ int main(){
 
   //Get paragraph
   paragraph = random_paragraph();
-  strcat(paragraph, "\0");
-  //printw("%s\n",paragraph);
 
   //Get screen size
   getmaxyx(stdscr, yMax, xMax);
 
   //Typing paragraph
-  while (strcmp(paragraph, "\0")!= 0){
-    mvprintw(15,0,"%s\n", paragraph);
-    if (start.millitm == -1){
-      ftime(&start);
-      ftime(&last);
+  while (strcmp(paragraph, "\0")!= 0){ //while there is still text left in the paragraph
+    if (start == -1){ //If the race has not yet started, start the timer
+      start= time(NULL);
     }
+
     print_paragraph(paragraph, typed);
-    ftime(&new);
-    mvprintw(yMax-1, 1, "%ld wpm\n", get_wpm(new.millitm - last.millitm));
-    //printw("%s\n",paragraph);
-    c = getch();
-    c = (char) c;
-    strcpy(paragraph, char_check(paragraph, typed, c));
-    clear(); //clear the screen
-    last.millitm = new.millitm;
+    print_stats(wpm, nitro, accuracy);
+
+    wpm = get_wpm(time(NULL)-start, strlen(typed));
+
+    c = (char) getch(); //get keyboard input
+    if (c == '\r' && nitro == 1){ //if player pressed enter and still has a boost
+      while (paragraph[0] != ' '){ //until there is a space
+	      paragraph = char_check(paragraph,typed,paragraph[0]); //move up
+      }
+      paragraph = char_check(paragraph,typed,paragraph[0]); //move past the space
+      nitro = 0; //use the boost
+    }
+    else if (c != '\r'){ //if player pressed other keys
+      num_keys += 1; //add to total number of keys
+      update = char_check(paragraph,typed, c); //"new" paragraph
+      if (strcmp(paragraph, update) == 0) { //if the "new" is the same as the original
+	       errors += 1;// add 1 to the number of errors made
+      }
+      else {
+	       paragraph = update; //else update the paragraph
+      }
+    }
+    accuracy = (num_keys-errors) / num_keys; //calculate accuracy
+    wrefresh(stdscr); //clear the screen
+
   }
   print_paragraph(paragraph, typed);
   printw("Race Over\n");
-  
-  //Terminate program
-  getch(); //pauses screen so it doesnt exit immediately. Press any key to exit
+  getch();
   endwin();
+
   return 0;
+
 }

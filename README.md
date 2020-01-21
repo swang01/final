@@ -74,3 +74,10 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
   - Steve:
     - Renamed original README.md to PROPOSAL.md
     - Created and updated README.md
+    
+#### Sat, 1/18/2010
+  - Vivian:
+    - Fixed the issue with the blackspace
+    - Finally got the wpm calculator to work
+    - Added an accuracy calculator as well
+    - Successfuly implemented nitros
