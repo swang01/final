@@ -10,20 +10,9 @@
 #include <signal.h>
 #include <ncurses.h>
 #include <sys/timeb.h>
-#include <ctype.h>
 
 #define PAR_LEN 800
 #define FILENAME "paragraph.txt"
-#define NAME_LEN 15
-#define MAX_PLAYERS 4
-#define FULL "FULL"
-
-struct player_data {
-  char username[NAME_LEN];
-  int wpm;
-  float accuracy;
-  float progress;
-};
 
 int random_num();
 char * random_paragraph();

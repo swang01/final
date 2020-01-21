@@ -34,17 +34,17 @@ char * char_check(char * paragraph, char * typed, char c){
 */
 void print_paragraph(char * paragraph, char * typed){
   start_color();
-  init_pair(1, COLOR_GREEN, COLOR_WHITE);
+  init_pair(1, COLOR_GREEN, COLOR_BLACK);
   init_pair(2, COLOR_RED, COLOR_BLACK);
-  //mvprintw(0,0,"'");
+  mvprintw(0,0,"'");
 
   //Print typed characters in Green
   attron(COLOR_PAIR(1));
-  mvprintw(0,0,"%s", typed);
+  printw("%s", typed);
   attroff(COLOR_PAIR(1));
 
   //Print the rest of the paragraph in white
-  printw("%s\n", paragraph);
+  printw("%s'\n", paragraph);
 }
 
 
@@ -156,7 +156,6 @@ int main(int argc, char **argv) {
   char * cur;
   char *paragraph;
   char *update;
-  char username[NAME_LEN];
   char typed[PAR_LEN] = "";
   int c;
   int yMax, xMax;
@@ -170,6 +169,7 @@ int main(int argc, char **argv) {
   //Ncurses initialization
   initscr();
   cbreak();
+  noecho();
   nonl();
   intrflush(stdscr,FALSE);
 
@@ -190,23 +190,8 @@ int main(int argc, char **argv) {
   else
     server_socket = client_setup( TEST_IP );
 
-  //Connecting to the server
-  mvprintw(0,0, "Type in your username(max %d characters): ", NAME_LEN);
-  mvprintw(2,0, "PRESS ENTER TO CONTINUE");
-  move(1, 0);
-  c = (char) getch();
-  int ind = 0;
-  while (c != '\r'){
-    username[ind] = c;
-    ind ++;
-    c = (char) getch();
-  }
-  write(server_socket, username, sizeof(username));
-  read(server_socket, buffer, sizeof(buffer));
-
   //Typing paragraph
-  noecho();  
-  while (strcmp(paragraph, "\0")!= 0){ //while there is still text left in the paragraph
+ while (strcmp(paragraph, "\0")!= 0){ //while there is still text left in the paragraph
    if (start == -1){ //If the race has not yet started, start the timer
      start= time(NULL);
    }
@@ -246,19 +231,27 @@ int main(int argc, char **argv) {
  getch();
  endwin();
 
-  printf("enter data: ");
-  //the above printf does not have \n
-  //flush the buffer to immediately print
-  fflush(stdout);
+/*  int server_socket;
+  char buffer[BUFFER_SIZE];
+  fd_set read_fds;
+  if (argc == 2)
+    server_socket = client_setup( argv[1]);
+  else
+    server_socket = client_setup( TEST_IP ); */
 
-  //select() modifies read_fds
-  //we must reset it at each iteration
-  FD_ZERO(&read_fds);
-  FD_SET(STDIN_FILENO, &read_fds); //add stdin to fd set
-  FD_SET(server_socket, &read_fds); //add socket to fd set
+    printf("enter data: ");
+    //the above printf does not have \n
+    //flush the buffer to immediately print
+    fflush(stdout);
 
-  //select will block until either fd is ready
-  select(server_socket + 1, &read_fds, NULL, NULL, NULL);
+    //select() modifies read_fds
+    //we must reset it at each iteration
+    FD_ZERO(&read_fds);
+    FD_SET(STDIN_FILENO, &read_fds); //add stdin to fd set
+    FD_SET(server_socket, &read_fds); //add socket to fd set
+
+    //select will block until either fd is ready
+    select(server_socket + 1, &read_fds, NULL, NULL, NULL);
 
   /*  if (FD_ISSET(STDIN_FILENO, &read_fds)) {
       fgets(buffer, sizeof(buffer), stdin);
@@ -271,14 +264,14 @@ int main(int argc, char **argv) {
     //currently the server is not set up to
     //send messages to all the clients, but
     //this would allow for broadcast messages
-  if (FD_ISSET(server_socket, &read_fds)) {
-    read(server_socket, buffer, sizeof(buffer));
-    printf("[SERVER BROADCAST] [%s]\n", buffer);
-    printf("enter data: ");
+    if (FD_ISSET(server_socket, &read_fds)) {
+      read(server_socket, buffer, sizeof(buffer));
+      printf("[SERVER BROADCAST] [%s]\n", buffer);
+      printf("enter data: ");
       //the above printf does not have \n
       //flush the buffer to immediately print
-    fflush(stdout);
-  }//end socket select
+      fflush(stdout);
+    }//end socket select
 
   //end loop
 }
