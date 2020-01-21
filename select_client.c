@@ -34,17 +34,17 @@ char * char_check(char * paragraph, char * typed, char c){
 */
 void print_paragraph(char * paragraph, char * typed){
   start_color();
-  init_pair(1, COLOR_GREEN, COLOR_BLACK);
+  init_pair(1, COLOR_GREEN, COLOR_WHITE);
   init_pair(2, COLOR_RED, COLOR_BLACK);
-  mvprintw(0,0,"'");
+  //mvprintw(0,0,"'");
 
   //Print typed characters in Green
   attron(COLOR_PAIR(1));
-  printw("%s", typed);
+  mvprintw(0,0,"%s", typed);
   attroff(COLOR_PAIR(1));
 
   //Print the rest of the paragraph in white
-  printw("%s'\n", paragraph);
+  printw("%s\n", paragraph);
 }
 
 
@@ -156,6 +156,7 @@ int main(int argc, char **argv) {
   char * cur;
   char *paragraph;
   char *update;
+  char username[NAME_LEN];
   char typed[PAR_LEN] = "";
   int c;
   int yMax, xMax;
@@ -169,7 +170,6 @@ int main(int argc, char **argv) {
   //Ncurses initialization
   initscr();
   cbreak();
-  noecho();
   nonl();
   intrflush(stdscr,FALSE);
 
@@ -190,8 +190,23 @@ int main(int argc, char **argv) {
   else
     server_socket = client_setup( TEST_IP );
 
+  //Connecting to the server
+  mvprintw(0,0, "Type in your username(max %d characters): ", NAME_LEN);
+  mvprintw(2,0, "PRESS ENTER TO CONTINUE");
+  move(1, 0);
+  c = (char) getch();
+  int ind = 0;
+  while (c != '\r'){
+    username[ind] = c;
+    ind ++;
+    c = (char) getch();
+  }
+  write(server_socket, username, sizeof(username));
+  read(server_socket, buffer, sizeof(buffer));
+
   //Typing paragraph
- while (strcmp(paragraph, "\0")!= 0){ //while there is still text left in the paragraph
+  noecho();  
+  while (strcmp(paragraph, "\0")!= 0){ //while there is still text left in the paragraph
    if (start == -1){ //If the race has not yet started, start the timer
      start= time(NULL);
    }

@@ -1,7 +1,9 @@
+#include "headers.h"
 #include "networking.h"
 
 void process(char *s);
-void subserver(int from_client);
+void subserver(int from_client, int num_players);
+int isnumber(char * str);
 
 int main() {
 
@@ -11,6 +13,9 @@ int main() {
   int subserver_count = 0;
   char buffer[BUFFER_SIZE];
 
+  int num_players = 0;
+  struct player_data* players[MAX_PLAYERS];
+  
   //set of file descriptors to read from
   fd_set read_fds;
 
@@ -32,8 +37,10 @@ int main() {
      client_socket = server_connect(listen_socket);
 
      f = fork();
-     if (f == 0)
-       subserver(client_socket);
+     if (f == 0){
+       subserver(client_socket, num_players);
+       num_players ++;
+     }
      else {
        subserver_count++;
        close(client_socket);
@@ -49,29 +56,34 @@ int main() {
   }
 }
 
-void subserver(int client_socket) {
+void subserver(int client_socket, int num_players) {
   char buffer[BUFFER_SIZE];
 
   //for testing client select statement
-  strncpy(buffer, "hello client", sizeof(buffer));
-  write(client_socket, buffer, sizeof(buffer));
-
   while (read(client_socket, buffer, sizeof(buffer))) {
-
-    printf("[subserver %d] received: [%s]\n", getpid(), buffer);
-    process(buffer);
-    write(client_socket, buffer, sizeof(buffer));
+    if (!(isnumber(buffer))){
+      if (num_players > 4){
+	strncpy(buffer, FULL, sizeof(buffer));
+	write(client_socket, buffer, sizeof(buffer));
+      }
+      else{
+	struct player_data* new_player;
+	strcpy(new_player->username , buffer);
+      }
+    }
+    //else {
+      printf("[subserver %d] received: [%s]\n", getpid(), buffer);
+      //process(buffer);
+      write(client_socket, buffer, sizeof(buffer));
+      // }
   }//end read loop
   close(client_socket);
   exit(0);
 }
 
-void process(char * s) {
-  while (*s) {
-    if (*s >= 'a' && *s <= 'z')
-      *s = ((*s - 'a') + 13) % 26 + 'a';
-    else  if (*s >= 'A' && *s <= 'Z')
-      *s = ((*s - 'a') + 13) % 26 + 'a';
-    s++;
+int isnumber(char * str){
+  while(*str){
+    if (isdigit(*str++) == 0) return 0;
   }
+  return 1;
 }
