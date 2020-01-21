@@ -179,6 +179,17 @@ int main(int argc, char **argv) {
   //Get screen size
   getmaxyx(stdscr, yMax, xMax);
 
+  //Initialize network
+  int server_socket;
+  char buffer[BUFFER_SIZE];
+
+  fd_set read_fds;
+
+  if (argc == 2)
+    server_socket = client_setup( argv[1]);
+  else
+    server_socket = client_setup( TEST_IP );
+
   //Typing paragraph
  while (strcmp(paragraph, "\0")!= 0){ //while there is still text left in the paragraph
    if (start == -1){ //If the race has not yet started, start the timer
@@ -189,8 +200,11 @@ int main(int argc, char **argv) {
    print_stats(wpm, nitro, accuracy);
 
    wpm = get_wpm(time(NULL)-start, strlen(typed));
-
+   sprintf(buffer, "%f", wpm);
    c = (char) getch(); //get keyboard input
+   write(server_socket, buffer, sizeof(buffer));
+   read(server_socket, buffer, sizeof(buffer));
+   fflush(stdout);
    if (c == '\r' && nitro == 1){ //if player pressed enter and still has a boost
      while (paragraph[0] != ' '){ //until there is a space
        paragraph = char_check(paragraph,typed,paragraph[0]); //move up
@@ -217,9 +231,7 @@ int main(int argc, char **argv) {
  getch();
  endwin();
 
- return 0;
-
-  int server_socket;
+/*  int server_socket;
   char buffer[BUFFER_SIZE];
 
   fd_set read_fds;
@@ -227,9 +239,7 @@ int main(int argc, char **argv) {
   if (argc == 2)
     server_socket = client_setup( argv[1]);
   else
-    server_socket = client_setup( TEST_IP );
-
-  while (1) {
+    server_socket = client_setup( TEST_IP ); */
 
     printf("enter data: ");
     //the above printf does not have \n
@@ -245,13 +255,13 @@ int main(int argc, char **argv) {
     //select will block until either fd is ready
     select(server_socket + 1, &read_fds, NULL, NULL, NULL);
 
-    if (FD_ISSET(STDIN_FILENO, &read_fds)) {
+  /*  if (FD_ISSET(STDIN_FILENO, &read_fds)) {
       fgets(buffer, sizeof(buffer), stdin);
       *strchr(buffer, '\n') = 0;
       write(server_socket, buffer, sizeof(buffer));
       read(server_socket, buffer, sizeof(buffer));
       printf("received: [%s]\n", buffer);
-    }//end stdin select
+    }//end stdin select */
 
     //currently the server is not set up to
     //send messages to all the clients, but
