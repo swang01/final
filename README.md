@@ -1,5 +1,6 @@
 # ByteType
 By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
+A.K.A. distressed dog, distressed hamster, distressed cat
 
 ### Description
   Welcome to ByteType, a type-racing game modeled after the game NitroType which you can find and play at nitrotype.com. To play, up to 4 players will join a game. The “race host” has the option to start when everyone is ready by pressing a button. After a short delay, users will type a paragraph of text selected randomly from a database as fast, and accurately as they can before the other players finish. Each player (not including bots) is given a boost that players can use once per game to skip a word. Statistics like words per minute and accuracy as well as positions will be displayed in real time. 
@@ -15,6 +16,10 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
   - Type the paragraph you see on the screen. If a letter turns green, the letter has been typed successfully.
   - Words per minute and accuracy is displayed at the bottom of the screen
 
+### Bugs / Attempted and failed
+  - Unsuccessfully tried to implement pipes into networking between the main server and subservers, so it was left out entirely on master branch
+  - Unsuccessfully attempted to connect multiple players and race simultaneously: when pulling and running the code from master branch a client can still race by themselves and see their own stats for the current race before exiting via a key press
+  - (Not on master branch but on networking branches) When the client is prompted for input the first time, input is sucessfully transferred to the server but then the client gets stalled afterwards until another client connects to the server, probably because of something to do with the reading 
 ### Devlog
 #### Thurs, 1/2/2020 - Tues, 1/7/2020
  - Proposal got finalized after fixing the initial issues
@@ -107,4 +112,6 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
     - Started with networking, incorporated it into the client
     - Successfully made the client send words per minute statistic to the server then to the client.
   - Rachel:
-    - Was somewhat successful getting pipes to work with subservers, but running into issues with reading and the program pausing to get data
+    - Was somewhat successful getting pipes to work with subservers, but running into issues with reading and the program pausing to get data. This was all work done on a separate repo but I added
+    - When data is getting written and read from the pipes, the retrieval and writing of data is only successful when the client first connects to the server and sends in its first input, but afterwards client gets stalled and the pipes in the server/subservers receive weird data from previous clients, a seg fault occurs and crashes the server. Clients are left hanging
+    - Unable to get pipes to work because program would pause and information would only be read in pipes after a new client has joined for some reason. Couldn't figure out why after being unable to test code because I kept getting the error that address was already in use.
