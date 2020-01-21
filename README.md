@@ -9,6 +9,11 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
     - In order to install ncurses, do sudo apt-get install libncurses5-dev libncursesw5-dev
     
 ### How to Play
+  - Compile sclient and sserver using make
+  - Run ./server ./client on one terminal
+  - On another terminal, run ./client to start the game
+  - Type the paragraph you see on the screen. If a letter turns green, the letter has been typed successfully.
+  - Words per minute and accuracy is displayed at the bottom of the screen
 
 ### Devlog
 #### Thurs, 1/2/2020 - Tues, 1/7/2020
@@ -75,9 +80,13 @@ By Vivian Huynh (5), Rachel Leong (10), Steve Wang (10)
     - Renamed original README.md to PROPOSAL.md
     - Created and updated README.md
     
-#### Sat, 1/18/2010
+#### Sat, 1/18/2020
   - Vivian:
     - Fixed the issue with the blackspace
     - Finally got the wpm calculator to work
     - Added an accuracy calculator as well
     - Successfuly implemented nitros
+#### Mon, 1/20/2020
+  - Steve:
+    - Started with networking, incorporated it into the client
+    - Successfully made the client send words per minute statistic to the server then to the client.

@@ -17,8 +17,8 @@ sclient: select_client.o networking.o
 client.o: client.c
 	gcc -c client.c
 
-sub_server.o: sub_server.c
-	gcc -c sub_server.c
+# sub_server.o: sub_server.c
+# 	gcc -c sub_server.c
 
 forking_server.o: forking_server.c networking.h
 	gcc -c forking_server.c
@@ -35,4 +35,3 @@ clean:
 
 run:
 	./client.out
-	
